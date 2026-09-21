@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portafolio Académico | Universidad Peruana Los Andes</title>
+    <style>
+        /* =========================================
+           1. RESETEO Y FUENTES BASE
+           ========================================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f4f7fb;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* =========================================
+           2. BARRA SUPERIOR (ESTADO Y LOGIN)
+           ========================================= */
+        .top-bar {
+            background-color: #e2e8f0;
+            padding: 10px 30px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 20px;
+            border-bottom: 1px solid #cbd5e1;
+            font-size: 0.9rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .status-info {
+            color: #475569;
+        }
+
+        .badge-guest {
+            background-color: #64748b;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+
+        .badge-admin {
+            background-color: #16a34a;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+
+        .btn-login-corner {
+            background-color: #0b5b9c;
+            color: white;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s, transform 0.1s;
+            user-select: none;
+        }
+
+        .btn-login-corner:hover {
+            background-color: #084373;
+        }
+
+        .btn-login-corner:active {
+            transform: scale(0.97);
+        }
+
+        .btn-logout {
+            background-color: #dc2626 !important;
+        }
+
+        .btn-logout:hover {
+            background-color: #b91c1c !important;
+        }
+
+        /* =========================================
+           3. ENCABEZADO INSTITUCIONAL (UPLA)
+           ========================================= */
+        header {
+            background-color: #0b5b9c;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .logo {
+            width: 80px;
+            height: auto;
+            background-color: white;
+            border-radius: 8px;
+            padding: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header-text h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .header-text h2 {
+            font-size: 1.1rem;
+            font-weight: 400;
+            color: #87ceeb;
+        }
+
+        nav {
+            background-color: #084373;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            color: #cbd5e1;
+            padding: 16px 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            outline: none;
+        }
+
+        .nav-btn:hover {
+            color: white;
+            background-color: rgba(255,255,255,0.1);
+        }
+
+        .nav-btn.active {
+            color: white;
+            background-color: #0b5b9c;
+            border-bottom: 4px solid #87ceeb;
+        }
+
+        /* =========================================
+           4. CONTENIDO PRINCIPAL Y UNIDADES
+           ========================================= */
+        main {
+            flex: 1;
+            max-width: 1100px;
+            width: 100%;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .course-section {
+            display: none;
+        }
+
+        .course-section.active-section {
+            display: block !important;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .course-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .course-header h2 {
+            color: #0b5b9c;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        .course-header p {
+            color: #64748b;
+        }
+
+        .units-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .unit-accordion {
+            background: white;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .unit-header {
+            background-color: #f8fafc;
+            padding: 18px 20px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #0b5b9c;
+            cursor: pointer;
+            border-left: 6px solid #87ceeb;
+            transition: background 0.2s;
+        }
+
+        .unit-header:hover {
+            background-color: #f1f5f9;
+        }
+
+        .weeks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 15px;
+            padding: 20px;
+        }
+
+        .week-card {
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            transition: box-shadow 0.3s;
+        }
+
+        .week-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .week-card h4 {
+            color: #0b5b9c;
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            border-bottom: 2px solid #87ceeb;
+            padding-bottom: 4px;
+            display: inline-block;
+        }
+
+        .topic-title {
+            font-size: 0.9rem;
+            color: #475569;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .admin-controls {
+            display: none;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 12px;
+            background-color: #f8fafc;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px dashed #cbd5e1;
+        }
+
+        body.is-admin .admin-controls {
+            display: flex !important;
+        }
+
+        .admin-controls input[type="file"] {
+            font-size: 0.8rem;
+            width: 100%;
+        }
+
+        .btn-save {
+            background-color: #0b5b9c;
+            color: white;
+            border: none;
+            padding: 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+
+        .btn-save:hover {
+            background-color: #084373;
+        }
+
+        .btn-download {
+            display: block;
+            text-align: center;
+            background-color: #10b981;
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .btn-download:hover {
+            background-color: #059669;
+        }
+
+        .btn-download.disabled {
+            background-color: #e2e8f0;
+            color: #94a3b8;
+            pointer-events: none;
+        }
+
+        /* =========================================
+           5. MODAL DE INICIO DE SESIÓN
+           ========================================= */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.65);
+            justify-content: center;
+            align-items: center;
+            z-index: 99999;
+            backdrop-filter: blur(2px);
+        }
+
+        .modal.show {
+            display: flex !important;
+        }
+
+        .modal-content {
+            background-color: white;
+            width: 90%;
+            max-width: 380px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+            position: relative;
+            animation: modalSlide 0.25s ease-out;
+        }
+
+        @keyframes modalSlide {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 12px;
+            right: 15px;
+            font-size: 1.8rem;
+            color: white;
+            cursor: pointer;
+            line-height: 1;
+            transition: opacity 0.2s;
+        }
+
+        .close-btn:hover {
+            opacity: 0.8;
+        }
+
+        .modal-header {
+            background-color: #0b5b9c;
+            color: white;
+            padding: 25px 20px;
+            text-align: center;
+            border-bottom: 4px solid #87ceeb;
+        }
+
+        .modal-header h2 {
+            font-size: 1.4rem;
+            margin-bottom: 5px;
+        }
+
+        .modal-header p {
+            font-size: 0.85rem;
+            color: #dbeaff;
+        }
+
+        .modal-body {
+            padding: 25px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .modal-body input {
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .modal-body input:focus {
+            border-color: #0b5b9c;
+            box-shadow: 0 0 0 3px rgba(11, 91, 156, 0.15);
+        }
+
+        .btn-submit {
+            background-color: #0b5b9c;
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 5px;
+            transition: background 0.2s;
+        }
+
+        .btn-submit:hover {
+            background-color: #084373;
+        }
+
+        .error-msg {
+            color: #ef4444;
+            font-size: 0.85rem;
+            text-align: center;
+            min-height: 18px;
+        }
+
+        /* =========================================
+           6. NOTIFICACIONES FLOTANTES (TOAST)
+           ========================================= */
+        .toast {
+            visibility: hidden;
+            min-width: 280px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 14px 20px;
+            position: fixed;
+            z-index: 100000;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%);
+            font-size: 0.9rem;
+            font-weight: 600;
+            opacity: 0;
+            transition: opacity 0.3s, visibility 0.3s;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .toast.show {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .toast.success { background-color: #10b981; }
+        .toast.error { background-color: #ef4444; }
+
+        footer {
+            background-color: #0f172a;
+            color: #94a3b8;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- BARRA SUPERIOR -->
+    <div class="top-bar">
+        <div class="status-info">
+            Vista actual: <span id="current-role" class="badge-guest">Visitante (Solo Lectura)</span>
+        </div>
+        <button id="auth-btn" class="btn-login-corner" type="button" onclick="openLoginModal()">Acceso Admin</button>
+    </div>
+
+    <!-- VENTANA FLOTANTE DE LOGIN -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeLoginModal()">&times;</span>
+            <div class="modal-header">
+                <h2>Acceso Administrador</h2>
+                <p>Gestión y carga de entregables</p>
+            </div>
+            <div class="modal-body">
+                <input type="text" id="adminUser" placeholder="Usuario (ej. miguel)" autocomplete="username">
+                <input type="password" id="adminPass" placeholder="Contraseña" autocomplete="current-password">
+                <p id="login-error" class="error-msg"></p>
+                <button type="button" class="btn-submit" onclick="login()">Iniciar Sesión</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ENCABEZADO INSTITUCIONAL -->
+    <header>
+        <div class="header-container">
+            <img src="image_401b6a.png" alt="Logo UPLA" class="logo" onerror="this.src='https://via.placeholder.com/80?text=UPLA';">
+            <div class="header-text">
+                <h1>Universidad Peruana Los Andes</h1>
+                <h2>Portafolio de Estudiante: Miguel Portocarrero</h2>
+            </div>
+        </div>
+
+        <nav>
+            <ul>
+                <li><button type="button" id="btn-nav-algoritmos" class="nav-btn active" data-course="algoritmos" onclick="switchCourse('algoritmos', this)">Algoritmos</button></li>
+                <li><button type="button" id="btn-nav-desarrollo" class="nav-btn" data-course="desarrollo" onclick="switchCourse('desarrollo', this)">Desarrollo de Aplicaciones</button></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- CONTENIDO DEL PORTAFOLIO -->
+    <main>
+
+        <!-- CURSO 1: ALGORITMOS -->
+        <section id="algoritmos" class="course-section active-section">
+            <div class="course-header">
+                <h2>Curso: Algoritmos</h2>
+                <p>Sílabo y entregables semanales organizados por unidad académica.</p>
+            </div>
+
+            <div class="units-container">
+                <!-- UNIDAD I -->
+                <details class="unit-accordion" open>
+                    <summary class="unit-header">Unidad I: Fundamentos de Algoritmos y Estructuras Secuenciales</summary>
+                    <div class="weeks-grid">
+                        <div class="week-card">
+                            <h4>Semana 1</h4>
+                            <p class="topic-title">Introducción a la Algoritmia, variables y tipos de datos</p>
+                            <div class="admin-controls">
+                                <input type="file" id="file-algo-w1">
+                                <button class="btn-save" onclick="saveAndPrepareDownload('file-algo-w1', 'dl-algo-w1')">💾 Subir y Guardar</button>
+                            </div>
+                            <a id="dl-algo-w1" class="btn-download disabled" download>📥 Descargar Archivo</a>
+                        </div>
+                        <div class="week-card">
+                            <h4>Semana 2</h4>
+                            <p class="topic-title">Operadores aritméticos, relacionales y lógicos</p>
+                            <div class="admin-controls">
+                                <input type="file" id="file-algo-w2">
+                                <button class="btn-save" onclick="saveAndPrepareDownload('file-algo-w2', 'dl-algo-w2')">💾 Subir y Guardar</button>
+                            </div>
+                            <a id="dl-algo-w2" class="btn-download disabled" download>📥 Descargar Archivo</a>
+                        </div>
+                        <div class="week-card">
+                            <h4>Semana 3</h4>
+                            <p class="topic-title">Estructuras selectivas simples y dobles (If-Else)</p>
+                            <div class="admin-controls">
+                                <input type="file" id="file-algo-w3">
+                                <button class="btn-save" onclick="saveAndPrepareDownload('file-algo-w3', 'dl-algo-w3')">💾 Subir y Guardar</button>
+                            </div>
+                            <a id="dl-algo-w3" class="btn-download disabled" download>📥 Descargar Archivo</a>
+                        </div>
+                        <div class="week-card">
+                            <h4>Semana 4</h4>
+                            <p class="topic-title">Estructuras selectivas múltiples (Switch / Según)</p>
+                            <div class="admin-controls">
+                                <input type="file" id="file-algo-w4">
+                                <button class="btn-save" onclick="saveAndPrepareDownload('file-algo-w4', 'dl-algo-w4')">💾 Subir y Guardar</button>
+                            </div>
+                            <a id="dl-algo-w4" class="btn-download disabled" download>📥 Descargar Archivo</a>
+                        </div>
+                    </div>
+                </details>
+
+                <!-- UNIDAD II -->
+                <details class="unit-accordion">
+                    <summary class="unit-header">Unidad II: Estructuras Repetitivas y Arreglos Unidimensionales</summary>
+                    <div class="weeks-grid">
+                        <div class="week-card">
+                            <h4>Semana 5</h4>
+                            <p class="topic-title">Estructuras repetitivas: Bucle Mientras (While)</p>
+                            <div class="admin-controls">
+                                <input type="file" id="file-algo-w5">
+                                <button class="btn-save" onclick="saveAndPrepareDownload('file-algo-w5', 'dl-algo-w5')">💾 Subir y Guardar</button>
+                            </div>
+                            <a id="dl-algo-w5" class="btn-download disabled" download>📥 Descargar Archivo</a>
+                        </div>
+                        <div class="week-card">
+                            <h4>Semana 6</h4>
+                            <p class="topic-title">Estructuras repetitivas: Para (For) y Hacer-Mientras</p>
+                            <div class="admin-controls">
+                                <input type="file" id="file-algo-w6">
+                                <button class="btn-save" onclick="saveAndPrepareDownload('file-algo-w6', 'dl-algo-w6')">💾 Subir y Guardar</button>
+                            </div>
+                            <a id="dl-algo-w6" class="btn-download disabled" download>📥 Descargar Archivo</a>
+                        </div>
+                        <div class="week-card">
+                            <h4>Semana 7</h4>
+                            <p class="topic-title">Introducción a Arreglos Unidimensionales (Vectores)</p>
+                            <div class="admin-controls">
+                                <input type="file" id="file-algo-w7">
+                                <button class="btn-save" onclick="saveAndPrepareDownload('file-algo-w7', 'dl-algo-w7')">💾 Subir y Guardar</button>
+                            </div>
+                            <a id="dl-algo-w7" class="btn-download disabled" download>📥 Descargar Archivo</a>
+                        </div>
+                        <div class="week-card">
+                            <h4>Semana 8</h4>
+                            <p class="topic-title">Operaciones con Vectores (Inserción, Modificación)</p>
+                            <div class="admin-controls">
+                                <input type="file" id="file-algo-w8">
+                                <button class="btn-save" onclick="saveAndPrepareDownload('file-algo-w8', 'dl-algo-w8')">💾 Subir y Guardar</button>
+                            </div>
+                            <a id="dl-algo-w8" class="btn-download disabled" download>📥 Descargar Archivo</a>
+                        </div>
+                    </div>
+                </details>
+
+                <!-- UNIDAD III -->
+                <details class="unit-accordion">
+                    <summary class="unit-header">Unidad III: Arreglos Multidimensionales y Funciones</summary>
+                    <div class="weeks-grid">
+                        <div class="week-card">
+                            <h4>Semana 9</h4>
+                            <p class="topic-title">Arreglos Bidimensionales (Matrices)</p>
+                            <div class="admin-controls">
+                                <input type="file" id="file-algo-w9">
+                                <button class="btn-save" onclick="saveAndPrepareDownload('file-algo-w9', 'dl-algo-w9')">💾 Subir y Guardar</button>
+                            </div>
+                            <a id="dl-algo-w9" class="btn-download disabled" download>📥 Descargar Archivo</a>
+                        </div>
+                        <div class="week-card">
+                            <h4>Semana 10</h4>
+                            <p class="topic-title">Operaciones y recorridos en Matrices</p>
+                            <div class="admin-controls">
+                                <input type="file" id="file-algo-w10">
+                                <button class="btn-save" onclick="saveAndPrepareDownload('file-algo-w10', 'dl-algo-w10')">💾 Subir y Guardar</button>
+                            </div>
+                            <a id="dl-algo-w10" class="btn-download disabled" download>📥 Descargar Archivo</a>
+                        </div>
+                        <div class="week-card">
+                            <h4>Semana 11</h4>
+                            <p class="topic-title">Modularización: Subprogramas y Funciones</p>
+                            <div class="admin-controls">
+                                <input type="file" id="file-algo-w11">
+                                <button class="btn-save" onclick="saveAndPrepareDownload('file-algo-w11', 'dl-algo-w11')">💾 Subir y Guardar</button>
+                            </div>
+                            <a id="dl-algo-w11" class="btn-download disabled" download>📥 Descargar Archivo</a>
+                        </div>
+                        <div class="week-card">
+                            <h4>Semana 12</h4>
+                            <p class="topic-title">Paso de parámetros por valor y por referencia</p>
+                            <div class="admin-controls">
+                                <input type="file" id="file-algo-w12">
+                                <button class="btn-save" onclick="saveAndPrepareDownload('file-algo-w12', 'dl-algo-w12')">💾 Subir y Guardar</button>
+                            </div>
+                            <a id="dl-algo-w12" class="btn-download disabled" download>📥 Descargar Archivo</a>
+                        </div>
+                    </div>
+                </details>
+
+                <!-- UNIDAD IV -->
+                <details class="unit-accordion">
+                    <summary class="unit-header">Unidad IV: Algoritmos de Ordenamiento, Búsqueda y Evaluación Final</summary>
+                    <div class="weeks-grid">
+                        <div class="week-card">
+                            <h4>Semana 13</h4>
+                            <p class="topic-title">Métodos de ordenamiento (Burbuja, Inserción)</p>
+                            <div class="admin-controls">
+                                <input type="file" id="file-algo-w13">
+                                <button class="btn-save" onclick="saveAndPrepareDownload('file-algo-w13', 'dl-algo-w13')">💾 Subir y Guardar</button>
+                            </div>
+                            <a id="dl-algo-w13" class="btn-download disabled" download>📥 Descargar Archivo</a>
+                        </div>
+                        <div class="week-card">
+                            <h4>Semana 14</h4>
+                            <p class="topic-title">Algoritmos de búsqueda (Lineal y Binaria)</p>
+                            <div class="admin-controls">
+                                <input type="file" id="file-algo-w14">
+                                <button class="btn-save" onclick="saveAndPrepareDownload('file-algo-w14', 'dl-algo-w14')">💾 Subir y Guardar</button>
+                            </div>
+                            <a id="dl-algo-w14" class="btn-download disabled" download>📥 Descargar Archivo</a>
+                        </div>
+                        <div class="week-card">
+                            <h4>Semana 15</h4>
+                            <p class="topic-title">Integración de algoritmos y casos prácticos</p>
+                            <div class="admin-controls">
+                                <input type="file" id="file-algo-w15">
+                                <button class="btn-save" onclick="saveAndPrepareDownload('file-algo-w15', 'dl-algo-w15')">💾 Subir y Guardar</button>
+                            </div>
+                            <a id="dl-algo-w15" class="btn-download disabled" download>📥 Descargar Archivo</a>
+                        </div>
+                        <div class="week-card">
+                            <h4>Semana 16</h4>
+                            <p class="topic-title">Evaluación Final del Curso / Consolidado 2</p>
+                            <div class="admin-controls">
+                                <input type="file" id="file-algo-w16">
+                                <button class="btn-save" onclick="saveAndPrepareDownload('file-algo-w16', 'dl-algo-w16')">💾 Subir y Guardar</button>
+                            </div>
+                            <a id="dl-algo-w16" class="btn-download disabled" download>📥 Descargar Archivo</a>
+                        </div>
+                    </div>
+                </details>
+            </div>
+        </section>
+
+        <!-- CURSO 2: DESARROLLO DE APLICACIONES -->
+        <section id="desarrollo" class="course-section">
+            <div class="course-header">
+                <h2>Curso: Desarrollo de Aplicaciones</h2>
+                <p>Sílabo y entregables semanales organizados por unidad académica.</p>
+            </div>
+
+            <div class="units-container">
+                <!-- UNIDAD I -->
+                <details class="unit-accordion" open>
+                    <summary class="unit-header">Unidad I: Fundamentos de Interfaz de Usuario (HTML y CSS)</summary>
+                    <div class="weeks-grid">
+                        <div class="week-card">
+                            <h4>Semana 1</h4>
+                            <p class="topic-title">Introducción a la Web y estructuración con HTML5</p>
+                            <div class="admin-controls">
+                                <input type="file" id="file-dev-w1">
+                                <button class="btn-save" onclick="saveAndPrepareDownload('file-dev-w1', 'dl-dev-w1')">💾 Subir y Guardar</button>
+                            </div>
+                            <a id="dl-dev-w1" class="btn-download disabled" download>📥 Descargar Archivo</a>
+                        </div>
+                        <div class="week-card">
+                            <h4>Semana 2</h4>
+                            <p class="topic-title">Estilos en cascada (CSS3) y selectores básicos</p>
+                            <div class="admin-controls">
+                                <input type="file" id="file-dev-w2">
+                                <button class="btn-save" onclick="saveAndPrepareDownload('file-dev-w2', 'dl-dev-w2')">💾 Subir y Guardar</button>
+                            </div>
+                            <a id="dl-dev-w2" class="btn-download disabled" download>📥 Descargar Archivo</a>
+                        </div>
+                        <div class="week-card">
+                            <h4>Semana 3</h4>
+                            <p class="topic-title">Diseño responsivo: Flexbox y maquetación de vistas</p>
+                            <div class="admin-controls">
+                                <input type="file" id="file-dev-w3">
+                                <button class="btn-save" onclick="saveAndPrepareDownload('file-dev-w3', 'dl-dev-w3')">💾 Subir y Guardar</button>
+                            </div>
+                            <a id="dl-dev-w3" class="btn-download disabled" download>📥 Descargar Archivo</a>
+                        </div>
+                        <div class="week-card">
+                            <h4>Semana 4</h4>
+                            <p class="topic-title">Evaluación Práctica: Maquetación de interfaz web</p>
+                            <div class="admin-controls">
+                                <input type="file" id="file-dev-w4">
+                                <button class="btn-save" onclick="saveAndPrepareDownload('file-dev-w4', 'dl-dev-w4')">💾 Subir y Guardar</button>
+                            </div>
+                            <a id="dl-dev-w4" class="btn-download disabled" download>📥 Descargar Archivo</a>
+                        </div>
+                    </div>
+                </details>
+
+                <!-- UNIDAD II -->
+                <details class="unit-accordion">
+                    <summary class="unit-header">Unidad II: Interactividad y Lógica Frontend (JavaScript)</summary>
+                    <div class="weeks-grid">
+                        <div class="week-card">
+                            <h4>Semana 5</h4>
+                            <p class="topic-title">Introducción a JavaScript: Variables, tipos y operadores</p>
+                            <div class="admin-controls">
+                                <input type="file" id="file-dev-w5">
+                                <button class="btn-save" onclick="saveAndPrepareDownload('file-dev-w5', 'dl-dev-w5')">💾 Subir y Guardar</button>
+                            </div>
+                            <a id="dl-dev-w5" class="btn-download disabled" download>📥 Descargar Archivo</a>
+                        </div>
+                        <div class="week-card">
+                            <h4>Semana 6</h4>
+                            <p class="topic-title">Estructuras de control y manipulación del DOM</p>
+                            <div class="admin-controls">
+                                <input type="file" id="file-dev-w6">
+                                <button class="btn-save" onclick="saveAndPrepareDownload('file-dev-w6', 'dl-dev-w6')">💾 Subir y Guardar</button>
+                            </div>
+                            <a id="dl-dev-w6" class="btn-download disabled" download>📥 Descargar Archivo</a>
+                        </div>
+                        <div class="week-card">
+                            <h4>Semana 7</h4>
+                            <p class="topic-title">Eventos de usuario y validación de formularios</p>
+                            <div class="admin-controls">
+                                <input type="file" id="file-dev-w7">
+                                <button class="btn-save" onclick="saveAndPrepareDownload('file-dev-w7', 'dl-dev-w7')">💾 Subir y Guardar</button>
+                            </div>
+                            <a id="dl-dev-w7" class="btn-download disabled" download>📥 Descargar Archivo</a>
+                        </div>
+                        <div class="week-card">
+                            <h4>Semana 8</h4>
+                            <p class="topic-title">Examen Parcial / Consolidado 1</p>
+                            <div class="admin-controls">
+                                <input type="file" id="file-dev-w8">
+                                <button class="btn-save" onclick="saveAndPrepareDownload('file-dev-w8', 'dl-dev-w8')">💾 Subir y Guardar</button>
+                            </div>
+                            <a id="dl-dev-w8" class="btn-download disabled" download>📥 Descargar Archivo</a>
+                        </div>
+                    </div>
+                </details>
+
+                <!-- UNIDAD III -->
+                <details class="unit-accordion">
+                    <summary class="unit-header">Unidad III: Programación Orientada a Objetos y APIs</summary>
+                    <div class="weeks-grid">
+                        <div class="week-card">
+                            <h4>Semana 9</h4>
+                            <p class="topic-title">Programación Orientada a Objetos (Clases, constructores)</p>
+                            <div class="admin-controls">
+                                <input type="file" id="file-dev-w9">
+                                <button class="btn-save" onclick="saveAndPrepareDownload('file-dev-w9', 'dl-dev-w9')">💾 Subir y Guardar</button>
+                            </div>
+                            <a id="dl-dev-w9" class="btn-download disabled" download>📥 Descargar Archivo</a>
+                        </div>
+                        <div class="week-card">
+                            <h4>Semana 10</h4>
+                            <p class="topic-title">Asincronismo en la web (Promises, Async/Await)</p>
+                            <div class="admin-controls">
+                                <input type="file" id="file-dev-w10">
+                                <button class="btn-save" onclick="saveAndPrepareDownload('file-dev-w10', 'dl-dev-w10')">💾 Subir y Guardar</button>
+                            </div>
+                            <a id="dl-dev-w10" class="btn-download disabled" download>📥 Descargar Archivo</a>
+                        </div>
+                        <div class="week-card">
+                            <h4>Semana 11</h4>
+                            <p class="topic-title">Consumo de APIs externas (Fetch) y formato JSON</p>
+                            <div class="admin-controls">
+                                <input type="file" id="file-dev-w11">
+                                <button class="btn-save" onclick="saveAndPrepareDownload('file-dev-w11', 'dl-dev-w11')">💾 Subir y Guardar</button>
+                            </div>
+                            <a id="dl-dev-w11" class="btn-download disabled" download>📥 Descargar Archivo</a>
+                        </div>
+                        <div class="week-card">
+                            <h4>Semana 12</h4>
+                            <p class="topic-title">Evaluación / Práctica Calificada 2</p>
+                            <div class="admin-controls">
+                                <input type="file" id="file-dev-w12">
+                                <button class="btn-save" onclick="saveAndPrepareDownload('file-dev-w12', 'dl-dev-w12')">💾 Subir y Guardar</button>
+                            </div>
+                            <a id="dl-dev-w12" class="btn-download disabled" download>📥 Descargar Archivo</a>
+                        </div>
+                    </div>
+                </details>
+
+                <!-- UNIDAD IV -->
+                <details class="unit-accordion">
+                    <summary class="unit-header">Unidad IV: Despliegue de Aplicaciones y Proyecto Final</summary>
+                    <div class="weeks-grid">
+                        <div class="week-card">
+                            <h4>Semana 13</h4>
+                            <p class="topic-title">Almacenamiento local (LocalStorage y SessionStorage)</p>
+                            <div class="admin-controls">
+                                <input type="file" id="file-dev-w13">
+                                <button class="btn-save" onclick="saveAndPrepareDownload('file-dev-w13', 'dl-dev-w13')">💾 Subir y Guardar</button>
+                            </div>
+                            <a id="dl-dev-w13" class="btn-download disabled" download>📥 Descargar Archivo</a>
+                        </div>
+                        <div class="week-card">
+                            <h4>Semana 14</h4>
+                            <p class="topic-title">Control de versiones con Git y alojamiento (GitHub Pages)</p>
+                            <div class="admin-controls">
+                                <input type="file" id="file-dev-w14">
+                                <button class="btn-save" onclick="saveAndPrepareDownload('file-dev-w14', 'dl-dev-w14')">💾 Subir y Guardar</button>
+                            </div>
+                            <a id="dl-dev-w14" class="btn-download disabled" download>📥 Descargar Archivo</a>
+                        </div>
+                        <div class="week-card">
+                            <h4>Semana 15</h4>
+                            <p class="topic-title">Integración y ajustes finales del proyecto</p>
+                            <div class="admin-controls">
+                                <input type="file" id="file-dev-w15">
+                                <button class="btn-save" onclick="saveAndPrepareDownload('file-dev-w15', 'dl-dev-w15')">💾 Subir y Guardar</button>
+                            </div>
+                            <a id="dl-dev-w15" class="btn-download disabled" download>📥 Descargar Archivo</a>
+                        </div>
+                        <div class="week-card">
+                            <h4>Semana 16</h4>
+                            <p class="topic-title">Presentación de Proyecto Final / Consolidado 2</p>
+                            <div class="admin-controls">
+                                <input type="file" id="file-dev-w16">
+                                <button class="btn-save" onclick="saveAndPrepareDownload('file-dev-w16', 'dl-dev-w16')">💾 Subir y Guardar</button>
+                            </div>
+                            <a id="dl-dev-w16" class="btn-download disabled" download>📥 Descargar Archivo</a>
+                        </div>
+                    </div>
+                </details>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- NOTIFICACIÓN TOAST -->
+    <div id="toast" class="toast"></div>
+
+    <footer>
+        <p>&copy; 2026 Miguel Portocarrero | Universidad Peruana Los Andes</p>
+    </footer>
+
+    <!-- LIBRERÍA SUPABASE -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- LÓGICA DE APLICACIÓN -->
+    <script>
+        // ==========================================
+        // CONFIGURACIÓN Y CREDENCIALES DE SUPABASE
+        // ==========================================
+        const rawSupabaseUrl = 'https://onsudjhqwdwpysnpduxu.supabase.co/rest/v1/';
+        const supabaseUrl = rawSupabaseUrl.replace(/\/rest\/v1\/?$/, '');
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9uc3Vkamhxd2R3cHlzbnBkdXh1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk5NzQwMjcsImV4cCI6MjEwNTU1MDAyN30.9yckEt4cEkLRXBIgmHTRIXKfns0bFigMh1BUrs1LRdw'; 
+
+        let supabaseClient = null;
+
+        // Inicialización segura del cliente
+        function initSupabase() {
+            try {
+                if (window.supabase && typeof window.supabase.createClient === 'function') {
+                    supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
+                    console.log("Supabase inicializado correctamente.");
+                }
+            } catch (err) {
+                console.error("Error al inicializar Supabase:", err);
+            }
+        }
+
+        initSupabase();
+
+        // ==========================================
+        // CAMBIO DE CURSOS Y PESTAÑAS
+        // ==========================================
+        function switchCourse(courseId, btn) {
+            console.log("Cambiando a curso:", courseId);
+            
+            // Ocultar todas las secciones
+            document.querySelectorAll('.course-section').forEach(sec => {
+                sec.classList.remove('active-section');
+            });
+            
+            // Desactivar todos los botones de navegación
+            document.querySelectorAll('.nav-btn').forEach(b => {
+                b.classList.remove('active');
+            });
+            
+            // Mostrar la sección seleccionada
+            const targetSection = document.getElementById(courseId);
+            if (targetSection) {
+                targetSection.classList.add('active-section');
+            }
+
+            // Activar botón pulsado
+            if (btn) {
+                btn.classList.add('active');
+            } else {
+                const targetBtn = document.querySelector(`.nav-btn[data-course="${courseId}"]`);
+                if (targetBtn) targetBtn.classList.add('active');
+            }
+        }
+
+        // ==========================================
+        // MODAL Y ACCESO ADMINISTRADOR
+        // ==========================================
+        function openLoginModal() {
+            console.log("Abriendo modal de login...");
+            const modal = document.getElementById("loginModal");
+            if (modal) {
+                modal.classList.add("show");
+            }
+        }
+
+        function closeLoginModal() {
+            const modal = document.getElementById("loginModal");
+            if (modal) {
+                modal.classList.remove("show");
+            }
+            const error = document.getElementById('login-error');
+            if (error) error.textContent = "";
+        }
+
+        function login() {
+            const userEl = document.getElementById('adminUser');
+            const passEl = document.getElementById('adminPass');
+            const error = document.getElementById('login-error');
+
+            const user = userEl ? userEl.value.trim().toLowerCase() : '';
+            const pass = passEl ? passEl.value : '';
+
+            if (user === 'miguel' && pass === '123456') {
+                document.body.classList.add('is-admin');
+                const roleSpan = document.getElementById('current-role');
+                if (roleSpan) {
+                    roleSpan.textContent = 'Administrador (Miguel)';
+                    roleSpan.className = 'badge-admin';
+                }
+                const authBtn = document.getElementById('auth-btn');
+                if (authBtn) {
+                    authBtn.textContent = 'Cerrar Sesión';
+                    authBtn.classList.add('btn-logout');
+                    authBtn.onclick = logout;
+                }
+                closeLoginModal();
+                showToast('Modo administrador activado', 'success');
+            } else {
+                if (error) error.textContent = 'Usuario o contraseña incorrectos.';
+            }
+        }
+
+        function logout() {
+            document.body.classList.remove('is-admin');
+            const roleSpan = document.getElementById('current-role');
+            if (roleSpan) {
+                roleSpan.textContent = 'Visitante (Solo Lectura)';
+                roleSpan.className = 'badge-guest';
+            }
+            const authBtn = document.getElementById('auth-btn');
+            if (authBtn) {
+                authBtn.textContent = 'Acceso Admin';
+                authBtn.classList.remove('btn-logout');
+                authBtn.onclick = openLoginModal;
+            }
+            const u = document.getElementById('adminUser');
+            const p = document.getElementById('adminPass');
+            if (u) u.value = "";
+            if (p) p.value = "";
+            showToast('Sesión de administrador cerrada');
+        }
+
+        function showToast(message, type = '') {
+            const toast = document.getElementById('toast');
+            if (!toast) return;
+            toast.textContent = message;
+            toast.className = 'toast show ' + type;
+            setTimeout(() => {
+                toast.className = 'toast';
+            }, 4000);
+        }
+
+        // Registrar funciones explícitamente en el ámbito global (window)
+        window.switchCourse = switchCourse;
+        window.openLoginModal = openLoginModal;
+        window.closeLoginModal = closeLoginModal;
+        window.login = login;
+        window.logout = logout;
+        window.showToast = showToast;
+
+        // ==========================================
+        // SUBIR Y GUARDAR EN LA NUBE (ADMIN)
+        // ==========================================
+        async function saveAndPrepareDownload(inputId, downloadBtnId) {
+            if (!supabaseClient) {
+                initSupabase();
+            }
+
+            if (!supabaseClient) {
+                showToast('No hay conexión con la base de datos Supabase.', 'error');
+                return;
+            }
+
+            const fileInput = document.getElementById(inputId);
+            const downloadBtn = document.getElementById(downloadBtnId);
+
+            if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
+                showToast('Por favor, selecciona un archivo primero.', 'error');
+                return;
+            }
+
+            const file = fileInput.files[0];
+            const semanaId = downloadBtnId;
+            const fileExt = file.name.split('.').pop();
+            const uniqueFileName = `${semanaId}-${Date.now()}.${fileExt}`;
+
+            showToast('Subiendo archivo a Supabase...', 'success');
+
+            try {
+                // 1. Subir archivo al Bucket 'entregables'
+                const { data: uploadData, error: uploadError } = await supabaseClient.storage
+                    .from('entregables')
+                    .upload(uniqueFileName, file, { cacheControl: '3600', upsert: false });
+
+                if (uploadError) {
+                    showToast('Error en Storage: ' + uploadError.message, 'error');
+                    console.error(uploadError);
+                    return;
+                }
+
+                // 2. Obtener enlace público
+                const { data: urlData } = supabaseClient.storage
+                    .from('entregables')
+                    .getPublicUrl(uniqueFileName);
+
+                const fileUrl = urlData.publicUrl;
+
+                // 3. Guardar registro en la tabla 'archivos'
+                const { error: dbError } = await supabaseClient.from('archivos').upsert({
+                    semana_id: semanaId,
+                    nombre: file.name,
+                    url: fileUrl
+                });
+
+                if (dbError) {
+                    showToast('Error en Base de Datos: ' + dbError.message, 'error');
+                    console.error(dbError);
+                    return;
+                }
+
+                // 4. Actualizar botón en pantalla
+                if (downloadBtn) {
+                    downloadBtn.href = fileUrl;
+                    downloadBtn.target = "_blank";
+                    downloadBtn.classList.remove('disabled');
+                    downloadBtn.textContent = '📥 Descargar: ' + file.name;
+                }
+
+                showToast('¡Archivo guardado en la nube exitosamente!', 'success');
+            } catch (err) {
+                console.error("Excepción en guardado:", err);
+                showToast('Ocurrió un error inesperado al subir el archivo.', 'error');
+            }
+        }
+
+        window.saveAndPrepareDownload = saveAndPrepareDownload;
+
+        // Cargar archivos al iniciar la página
+        async function loadFilesFromSupabase() {
+            if (!supabaseClient) initSupabase();
+            if (!supabaseClient) return;
+
+            try {
+                const { data, error } = await supabaseClient.from('archivos').select('*');
+                if (error) throw error;
+
+                if (data) {
+                    data.forEach(item => {
+                        const btn = document.getElementById(item.semana_id);
+                        if (btn) {
+                            btn.href = item.url;
+                            btn.target = "_blank"; 
+                            btn.classList.remove('disabled');
+                            btn.textContent = '📥 Descargar: ' + item.nombre;
+                        }
+                    });
+                }
+            } catch (err) {
+                console.error("Error recuperando archivos de Supabase:", err);
+            }
+        }
+
+        // ==========================================
+        // EVENTOS DOM Y REGISTRO DIRECTO DE CLICS
+        // ==========================================
+        document.addEventListener("DOMContentLoaded", function() {
+            // Inicialización de cliente Supabase y datos
+            initSupabase();
+            loadFilesFromSupabase();
+
+            // Vincular botón Acceso Admin
+            const authBtn = document.getElementById('auth-btn');
+            if (authBtn) {
+                authBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    if (document.body.classList.contains('is-admin')) {
+                        logout();
+                    } else {
+                        openLoginModal();
+                    }
+                });
+            }
+
+            // Vincular pestañas de navegación
+            const btnAlgo = document.getElementById('btn-nav-algoritmos');
+            if (btnAlgo) {
+                btnAlgo.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    switchCourse('algoritmos', this);
+                });
+            }
+
+            const btnDev = document.getElementById('btn-nav-desarrollo');
+            if (btnDev) {
+                btnDev.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    switchCourse('desarrollo', this);
+                });
+            }
+
+            // Cerrar modal al hacer clic en el fondo oscuro
+            window.addEventListener('click', function(event) {
+                const modal = document.getElementById("loginModal");
+                if (event.target === modal) {
+                    closeLoginModal();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
