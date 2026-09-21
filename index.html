@@ -1354,14 +1354,18 @@
 
                     const fileUrl = urlData.publicUrl;
 
-                    // 3. Registrar en base de datos (Insertar nueva fila para permitir múltiples archivos por semana)
-                    const { error: dbError } = await supabaseClient.from('archivos').insert([
-                        {
-                            semana_id: semanaId,
-                            nombre: file.name,
-                            url: fileUrl
-                        }
-                    ]);
+                    // 3. Registrar en base de datos con objeto e ID único
+                    const recordPayload = {
+                        semana_id: semanaId,
+                        nombre: file.name,
+                        url: fileUrl
+                    };
+
+                    if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+                        recordPayload.id = crypto.randomUUID();
+                    }
+
+                    const { error: dbError } = await supabaseClient.from('archivos').insert([recordPayload]);
 
                     if (dbError) {
                         console.error('Error DB:', dbError);
