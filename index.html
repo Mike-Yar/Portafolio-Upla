@@ -3,16 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portafolio Académico UPLA | Retro Neon System</title>
+    <title>Portafolio Académico | Miguel Portocarrero - UPLA</title>
     
-    <!-- Fuentes estilo Cyber Retro -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- FUENTES Y LIBRERÍAS DE SUPABASE -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <style>
         /* =========================================
-           1. ESTILOS BASE Y VARIABLES RETRO NEÓN
+           1. VARIABLES Y RESETEO RETRO NEÓN
            ========================================= */
         :root {
             --bg-dark: #080a10;
@@ -25,7 +24,7 @@
             --neon-yellow: #ffee00;
             --text-main: #e2e8f0;
             --text-muted: #8a99ad;
-            --border-glow: rgba(0, 240, 255, 0.4);
+            --border-glow: rgba(0, 240, 255, 0.3);
         }
 
         * {
@@ -49,7 +48,6 @@
             overflow-x: hidden;
         }
 
-        /* */
         /* =========================================
            2. BARRA SUPERIOR RETRO NEÓN
            ========================================= */
@@ -123,13 +121,12 @@
             transition: all 0.3s ease;
             text-shadow: 0 0 8px var(--neon-pink);
             box-shadow: 0 0 10px rgba(255, 0, 127, 0.2);
-            text-transform: uppercase;
         }
 
         .btn-login-corner:hover {
             background: var(--neon-pink);
             color: #000;
-            box-shadow: 0 0 20px var(--neon-pink);
+            box-shadow: 0 0 20px rgba(255, 0, 127, 0.6);
             transform: translateY(-2px);
         }
 
@@ -137,21 +134,22 @@
             color: var(--neon-yellow) !important;
             border-color: var(--neon-yellow) !important;
             text-shadow: 0 0 8px var(--neon-yellow) !important;
+            box-shadow: 0 0 10px rgba(255, 238, 0, 0.2) !important;
         }
 
         .btn-logout:hover {
             background: var(--neon-yellow) !important;
             color: #000 !important;
-            box-shadow: 0 0 20px var(--neon-yellow) !important;
+            box-shadow: 0 0 20px rgba(255, 238, 0, 0.6) !important;
         }
 
         /* =========================================
-           3. ENCABEZADO INSTITUCIONAL Y NAV NEÓN
+           3. ENCABEZADO INSTITUCIONAL Y NAVEGACIÓN
            ========================================= */
         header {
             background: rgba(15, 19, 34, 0.85);
             border-bottom: 2px solid var(--neon-purple);
-            box-shadow: 0 5px 25px rgba(157, 0, 255, 0.25);
+            box-shadow: 0 0 20px rgba(157, 0, 255, 0.25);
         }
 
         .header-container {
@@ -166,7 +164,7 @@
         .logo {
             width: 85px;
             height: auto;
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.05);
             border-radius: 10px;
             padding: 6px;
             border: 2px solid var(--neon-cyan);
@@ -198,7 +196,7 @@
         }
 
         nav {
-            background: rgba(8, 10, 16, 0.95);
+            background: rgba(9, 10, 16, 0.95);
             border-top: 1px solid rgba(0, 240, 255, 0.2);
         }
 
@@ -234,20 +232,140 @@
         .nav-btn.active {
             color: #fff;
             background: rgba(0, 240, 255, 0.12);
-            text-shadow: 0 0 12px var(--neon-cyan);
+            text-shadow: 0 0 10px var(--neon-cyan);
             border-bottom: 3px solid var(--neon-cyan);
             box-shadow: inset 0 -10px 15px -5px rgba(0, 240, 255, 0.3);
         }
 
-        /* */
         /* =========================================
-           4. CONTENIDO PRINCIPAL Y TARJETAS
+           4. SECCIÓN DE PERFIL PERSONAL Y APRENDIZ
+           ========================================= */
+        .profile-container {
+            max-width: 1200px;
+            margin: 25px auto 10px auto;
+            padding: 0 20px;
+        }
+
+        .profile-card {
+            background: rgba(15, 19, 34, 0.9);
+            border: 2px solid var(--neon-cyan);
+            border-radius: 12px;
+            padding: 25px;
+            display: flex;
+            gap: 30px;
+            align-items: center;
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-pink), var(--neon-purple));
+        }
+
+        .profile-avatar-wrapper {
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .profile-avatar {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--neon-pink);
+            box-shadow: 0 0 18px var(--neon-pink);
+            background-color: #080a10;
+        }
+
+        .profile-badge-tag {
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--bg-dark);
+            color: var(--neon-cyan);
+            border: 1px solid var(--neon-cyan);
+            padding: 2px 10px;
+            border-radius: 10px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            white-space: nowrap;
+            box-shadow: 0 0 8px var(--neon-cyan);
+        }
+
+        .profile-details {
+            flex-grow: 1;
+        }
+
+        .profile-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            text-shadow: 0 0 8px var(--neon-cyan);
+            margin-bottom: 6px;
+        }
+
+        .profile-subtitle {
+            font-size: 1.1rem;
+            color: var(--neon-pink);
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .profile-meta-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 10px;
+            margin-bottom: 15px;
+            background: rgba(8, 10, 16, 0.6);
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid rgba(0, 240, 255, 0.15);
+        }
+
+        .meta-item {
+            font-size: 0.95rem;
+            color: var(--text-main);
+        }
+
+        .meta-item strong {
+            color: var(--neon-cyan);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .profile-bio {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            border-left: 3px solid var(--neon-purple);
+            padding-left: 12px;
+        }
+
+        /* =========================================
+           5. CONTENIDO PRINCIPAL Y TARJETAS
            ========================================= */
         main {
             flex: 1;
             max-width: 1200px;
             width: 100%;
-            margin: 35px auto;
+            margin: 20px auto 40px auto;
             padding: 0 20px;
         }
 
@@ -256,7 +374,7 @@
         }
 
         .course-section.active-section {
-            display: block !important;
+            display: block;
             animation: cyberFade 0.4s ease-out;
         }
 
@@ -282,7 +400,7 @@
             text-transform: uppercase;
             letter-spacing: 2px;
             text-shadow: 0 0 12px var(--neon-cyan);
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
         .course-header p {
@@ -311,16 +429,16 @@
         }
 
         .unit-header {
-            background: linear-gradient(90deg, rgba(0, 240, 255, 0.1), transparent);
+            background: linear-gradient(90deg, rgba(15, 19, 34, 0.9), transparent);
             padding: 20px 25px;
             font-family: 'Orbitron', sans-serif;
             font-size: 1.15rem;
             font-weight: 700;
-            color: var(--neon-cyan);
+            color: var(--neon-green);
             cursor: pointer;
             border-left: 6px solid var(--neon-cyan);
             transition: all 0.2s;
-            text-shadow: 0 0 8px rgba(0, 240, 255, 0.5);
+            text-shadow: 0 0 8px rgba(0, 255, 102, 0.5);
             user-select: none;
         }
 
@@ -333,24 +451,24 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 20px;
-            padding: 25px;
+            padding: 20px;
         }
 
         .week-card {
             background: rgba(10, 13, 24, 0.8);
-            border: 1px solid rgba(255, 0, 127, 0.25);
+            border: 1px solid rgba(255, 0, 127, 0.3);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
             border-radius: 8px;
             padding: 20px;
             display: flex;
             flex-direction: column;
-            transition: all 0.3s ease;
-            position: relative;
+            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
         }
 
         .week-card:hover {
-            border-color: var(--neon-pink);
-            box-shadow: 0 0 15px rgba(255, 0, 127, 0.3);
             transform: translateY(-3px);
+            border-color: var(--neon-pink);
+            box-shadow: 0 0 20px rgba(255, 0, 127, 0.3);
         }
 
         .week-card h4 {
@@ -360,7 +478,7 @@
             margin-bottom: 10px;
             border-bottom: 2px solid var(--neon-pink);
             padding-bottom: 6px;
-            text-shadow: 0 0 8px rgba(255, 0, 127, 0.5);
+            text-shadow: 0 0 8px var(--neon-pink);
             display: inline-block;
         }
 
@@ -369,19 +487,17 @@
             color: var(--text-main);
             margin-bottom: 20px;
             flex-grow: 1;
-            line-height: 1.4;
         }
 
-        /* */
         /* =========================================
-           5. CONTROLES ADMIN Y MULTI-ARCHIVOS
+           6. CONTROLES ADMIN Y MULTI-ARCHIVOS
            ========================================= */
         .admin-controls {
             display: none;
             flex-direction: column;
             gap: 10px;
             margin-bottom: 15px;
-            background: rgba(157, 0, 255, 0.08);
+            background: rgba(15, 19, 34, 0.8);
             padding: 12px;
             border-radius: 6px;
             border: 1px dashed var(--neon-purple);
@@ -404,7 +520,7 @@
             padding: 4px 10px;
             border-radius: 4px;
             cursor: pointer;
-            margin-right: 10px;
+            margin-right: 8px;
             transition: all 0.2s;
         }
 
@@ -414,7 +530,7 @@
         }
 
         .btn-save {
-            background: linear-gradient(135deg, var(--neon-purple), var(--neon-pink));
+            background: linear-gradient(135deg, var(--neon-purple), #6a00ff);
             color: white;
             border: none;
             padding: 10px;
@@ -433,7 +549,6 @@
             transform: scale(1.02);
         }
 
-        /* Lista contenedora de múltiples descargas */
         .files-container {
             display: flex;
             flex-direction: column;
@@ -446,7 +561,7 @@
             color: var(--text-muted);
             font-style: italic;
             text-align: center;
-            padding: 8px;
+            padding: 6px;
             border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 4px;
             background: rgba(0, 0, 0, 0.2);
@@ -471,7 +586,8 @@
         }
 
         .btn-download-neon {
-            color: var(--neon-cyan);
+            color: #fff;
+            text-shadow: 0 0 6px var(--neon-cyan);
             text-decoration: none;
             font-size: 0.85rem;
             font-weight: 700;
@@ -481,12 +597,11 @@
             display: flex;
             align-items: center;
             gap: 6px;
-            transition: color 0.2s;
+            transition: color 0.25s;
         }
 
         .btn-download-neon:hover {
-            color: #fff;
-            text-shadow: 0 0 6px var(--neon-cyan);
+            color: var(--neon-cyan);
         }
 
         .btn-delete-file {
@@ -510,9 +625,8 @@
             color: #000;
         }
 
-        /* */
         /* =========================================
-           6. VENTANA MODAL RETRO NEÓN (LOGIN)
+           7. VENTANA MODAL RETRO NEÓN (LOGIN)
            ========================================= */
         .modal {
             display: none;
@@ -541,10 +655,10 @@
             border: 2px solid var(--neon-pink);
             box-shadow: 0 0 35px rgba(255, 0, 127, 0.5);
             position: relative;
-            animation: modalNeonGlow 0.3s ease-out;
+            animation: modalNeonBlow 0.3s ease-out;
         }
 
-        @keyframes modalNeonGlow {
+        @keyframes modalNeonBlow {
             from { transform: scale(0.9); opacity: 0; }
             to { transform: scale(1); opacity: 1; }
         }
@@ -554,15 +668,15 @@
             top: 12px;
             right: 18px;
             font-size: 1.8rem;
-            color: var(--neon-pink);
+            color: var(--text-muted);
             cursor: pointer;
             line-height: 1;
             transition: all 0.2s;
-            text-shadow: 0 0 8px var(--neon-pink);
         }
 
         .close-btn:hover {
             color: #fff;
+            text-shadow: 0 0 8px var(--neon-pink);
             transform: scale(1.1);
         }
 
@@ -592,7 +706,7 @@
             padding: 30px 25px;
             display: flex;
             flex-direction: column;
-            gap: 18px;
+            gap: 16px;
         }
 
         .modal-body input {
@@ -644,7 +758,7 @@
         }
 
         /* =========================================
-           7. NOTIFICACIONES FLOTANTES (TOAST)
+           8. NOTIFICACIONES FLOTANTES (TOAST)
            ========================================= */
         .toast {
             visibility: hidden;
@@ -653,19 +767,18 @@
             color: #fff;
             text-align: center;
             border-radius: 6px;
-            padding: 14px 22px;
+            padding: 14px 24px;
             position: fixed;
             z-index: 100000;
             left: 50%;
-            bottom: 35px;
+            bottom: 30px;
             transform: translateX(-50%);
             font-size: 0.95rem;
             font-weight: 700;
             opacity: 0;
             transition: opacity 0.3s, visibility 0.3s;
             border: 2px solid var(--neon-cyan);
-            box-shadow: 0 0 20px var(--neon-cyan);
-            letter-spacing: 1px;
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
         }
 
         .toast.show {
@@ -673,86 +786,268 @@
             opacity: 1;
         }
 
-        .toast.success { 
-            border-color: var(--neon-green); 
-            box-shadow: 0 0 20px var(--neon-green);
-            color: var(--neon-green);
+        .toast.success { border-color: var(--neon-green); box-shadow: 0 0 20px rgba(0, 255, 102, 0.4); }
+        .toast.error { border-color: var(--neon-pink); box-shadow: 0 0 20px rgba(255, 0, 127, 0.4); }
+
+        /* =========================================
+           9. CYBER-BOT EXTENSIÓN DE IA
+           ========================================= */
+        .ai-fab {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+            color: #000;
+            padding: 12px 22px;
+            border-radius: 30px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 800;
+            font-size: 0.85rem;
+            cursor: pointer;
+            box-shadow: 0 0 20px var(--neon-cyan);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            border: 2px solid #fff;
         }
-        .toast.error { 
-            border-color: var(--neon-pink); 
-            box-shadow: 0 0 20px var(--neon-pink);
-            color: var(--neon-pink);
+
+        .ai-fab:hover {
+            transform: scale(1.08) translateY(-3px);
+            box-shadow: 0 0 30px var(--neon-pink);
+        }
+
+        .ai-drawer {
+            position: fixed;
+            bottom: 85px;
+            right: 25px;
+            width: 380px;
+            max-width: 90vw;
+            height: 520px;
+            background: rgba(10, 13, 24, 0.96);
+            border: 2px solid var(--neon-cyan);
+            border-radius: 12px;
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.4);
+            z-index: 9999;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .ai-drawer.open {
+            display: flex !important;
+            animation: cyberFade 0.3s ease-out;
+        }
+
+        .ai-header {
+            background: linear-gradient(90deg, rgba(0, 240, 255, 0.2), rgba(157, 0, 255, 0.2));
+            padding: 14px 18px;
+            border-bottom: 1px solid var(--neon-cyan);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .ai-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            color: var(--neon-cyan);
+            font-weight: 800;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .ai-body {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .ai-msg {
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            max-width: 85%;
+        }
+
+        .ai-msg.user {
+            background: rgba(0, 240, 255, 0.15);
+            border: 1px solid var(--neon-cyan);
+            align-self: flex-end;
+            color: #fff;
+        }
+
+        .ai-msg.bot {
+            background: rgba(255, 0, 127, 0.15);
+            border: 1px solid var(--neon-pink);
+            align-self: flex-start;
+            color: var(--text-main);
+        }
+
+        .ai-input-area {
+            padding: 12px;
+            border-top: 1px solid rgba(0, 240, 255, 0.2);
+            display: flex;
+            gap: 8px;
+            background: rgba(8, 10, 16, 0.8);
+        }
+
+        .ai-input-area input {
+            flex: 1;
+            background: rgba(15, 19, 34, 0.9);
+            border: 1px solid var(--neon-cyan);
+            color: #fff;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            outline: none;
+        }
+
+        .ai-send-btn {
+            background: var(--neon-cyan);
+            color: #000;
+            border: none;
+            padding: 10px 16px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            font-size: 0.8rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .ai-send-btn:hover {
+            background: var(--neon-pink);
+            color: #fff;
+            box-shadow: 0 0 10px var(--neon-pink);
         }
 
         footer {
-            background-color: rgba(5, 7, 14, 0.95);
-            border-top: 1px solid rgba(0, 240, 255, 0.2);
+            background-color: #05070e;
             color: var(--text-muted);
             text-align: center;
             padding: 22px 0;
             margin-top: auto;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 0.85rem;
-            letter-spacing: 1px;
+            border-top: 1px solid rgba(0, 240, 255, 0.15);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .profile-card {
+                flex-direction: column;
+                text-align: center;
+            }
+            .profile-bio {
+                border-left: none;
+                border-top: 2px solid var(--neon-purple);
+                padding-left: 0;
+                padding-top: 10px;
+            }
+            .top-bar {
+                flex-direction: column;
+                gap: 10px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- BARRA SUPERIOR NEÓN -->
+    <!-- BARRA SUPERIOR RETRO NEÓN -->
     <div class="top-bar">
-        <div class="system-title-badge">⚡ UPLA CYBER-PORTFOLIO 2026</div>
+        <div class="system-title-badge">⚡ PORTAFOLIO ACADÉMICO UPLA // NEON-SYSTEM</div>
         <div class="top-controls">
             <div class="status-info">
                 SISTEMA: <span id="current-role" class="badge-guest">VISITANTE (LECTURA)</span>
             </div>
-            <button id="auth-btn" class="btn-login-corner" type="button" onclick="openLoginModal()">Acceso Admin</button>
+            <button id="auth-btn" class="btn-login-corner" onclick="window.openLoginModal()">Acceso Admin</button>
         </div>
     </div>
 
-    <!-- VENTANA MODAL LOGIN RETRO NEÓN -->
+    <!-- VENTANA MODAL LOGIN ADMIN -->
     <div id="loginModal" class="modal">
         <div class="modal-content">
-            <span class="close-btn" onclick="closeLoginModal()">&times;</span>
+            <span class="close-btn" onclick="window.closeLoginModal()">×</span>
             <div class="modal-header">
-                <h2>ADMIN LOGIN</h2>
-                <p>Gestión de Archivos y Entregables</p>
+                <h2>AUTENTICACIÓN ADMIN</h2>
+                <p>Gestión y Administración de Entregables</p>
             </div>
             <div class="modal-body">
-                <input type="text" id="adminUser" placeholder="Usuario (ej. miguel)" autocomplete="username">
-                <input type="password" id="adminPass" placeholder="Contraseña" autocomplete="current-password">
+                <input type="text" id="adminUser" placeholder="Usuario (miguel)">
+                <input type="password" id="adminPass" placeholder="Contraseña">
                 <p id="login-error" class="error-msg"></p>
-                <button type="button" class="btn-submit" onclick="login()">INGRESAR AL SISTEMA</button>
+                <button class="btn-submit" onclick="window.login()">INGRESAR AL SISTEMA</button>
             </div>
         </div>
     </div>
 
-    <!-- ENCABEZADO INSTITUCIONAL RETRO -->
+    <!-- ENCABEZADO INSTITUCIONAL -->
     <header>
         <div class="header-container">
-            <img src="image_401b6a.png" alt="Logo UPLA" class="logo" onerror="this.src='https://via.placeholder.com/85/0f1322/00f0ff?text=UPLA';">
+            <img src="https://via.placeholder.com/85/080a10/00f0ff?text=UPLA" alt="Logo UPLA" class="logo">
             <div class="header-text">
                 <h1>Universidad Peruana Los Andes</h1>
-                <h2>PORTAFOLIO ACADÉMICO: MIGUEL PORTOCARRERO</h2>
+                <h2>Facultad de Ingeniería — Escuela Profesional de Ingeniería de Sistemas</h2>
             </div>
         </div>
 
         <nav>
             <ul>
-                <li><button type="button" id="btn-nav-algoritmos" class="nav-btn active" data-course="algoritmos" onclick="switchCourse('algoritmos', this)">Algoritmos</button></li>
-                <li><button type="button" id="btn-nav-desarrollo" class="nav-btn" data-course="desarrollo" onclick="switchCourse('desarrollo', this)">Desarrollo de Aplicaciones</button></li>
+                <li><button class="nav-btn active" onclick="window.switchCourse('algoritmos', this)">Algoritmos</button></li>
+                <li><button class="nav-btn" onclick="window.switchCourse('desarrollo', this)">Desarrollo de Aplicaciones</button></li>
             </ul>
         </nav>
     </header>
 
-    <!-- CONTENIDO DEL PORTAFOLIO -->
+    <!-- SECCIÓN DE PERFIL PERSONAL / DATOS DEL ESTUDIANTE -->
+    <div class="profile-container">
+        <div class="profile-card">
+            <div class="profile-avatar-wrapper">
+                <!-- Puedes cambiar la URL de esta foto por la de tu imagen personal -->
+                <img src="https://via.placeholder.com/140/0f1322/00f0ff?text=Miguel+P." alt="Foto de Miguel Portocarrero" class="profile-avatar" id="user-photo">
+                <div class="profile-badge-tag">UPLA 2026-II</div>
+            </div>
+            <div class="profile-details">
+                <h3 class="profile-name">Miguel Ángel Portocarrero Acuña</h3>
+                <div class="profile-subtitle">Estudiante de Ingeniería de Sistemas — 4.° Ciclo</div>
+                
+                <div class="profile-meta-grid">
+                    <div class="meta-item">
+                        <strong>CÓDIGO / ROL</strong>
+                        Estudiante Pregrado
+                    </div>
+                    <div class="meta-item">
+                        <strong>SEMESTRE ACADÉMICO</strong>
+                        2026-II (4to Ciclo)
+                    </div>
+                    <div class="meta-item">
+                        <strong>MODALIDAD</strong>
+                        Presencial / Portafolio Web
+                    </div>
+                </div>
+
+                <p class="profile-bio">
+                    <strong>Perfil del Aprendiz:</strong> Desarrollador e investigador en formación orientado al diseño de algoritmos optimizados, maquetación web responsiva e integración de bases de datos relacionales en la nube. En este portafolio unificado se recopilan las evidencias semanales, prácticas y proyectos correspondientes a las asignaturas de <em>Algoritmos</em> y <em>Desarrollo de Aplicaciones</em>.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTENIDO PRINCIPAL: CURSOS -->
     <main>
 
         <!-- CURSO 1: ALGORITMOS -->
         <section id="algoritmos" class="course-section active-section">
             <div class="course-header">
-                <h2>Curso: Algoritmos</h2>
-                <p>Sílabo y múltiple entrega de archivos organizada por semanas académicas.</p>
+                <h2>CURSO: ALGORITMOS</h2>
+                <p>Sílabo y entrega de evidencias organizadas por semanas académicas.</p>
             </div>
 
             <div class="units-container">
@@ -765,44 +1060,36 @@
                             <p class="topic-title">Introducción a la Algoritmia, variables y tipos de datos</p>
                             <div class="admin-controls">
                                 <input type="file" id="file-algo-w1" multiple>
-                                <button class="btn-save" onclick="saveAndPrepareDownload('file-algo-w1', 'container-algo-w1', 'algo-w1')">💾 Subir Archivos</button>
+                                <button class="btn-save" onclick="window.saveAndPrepareDownload('file-algo-w1', 'dl-algo-w1')">💾 SUBIR ARCHIVOS</button>
                             </div>
-                            <div id="container-algo-w1" class="files-container">
-                                <span class="no-files-label">Sin archivos entregados</span>
-                            </div>
+                            <div id="dl-algo-w1" class="files-container"><span class="no-files-label">Sin archivos entregados</span></div>
                         </div>
                         <div class="week-card">
                             <h4>Semana 2</h4>
                             <p class="topic-title">Operadores aritméticos, relacionales y lógicos</p>
                             <div class="admin-controls">
                                 <input type="file" id="file-algo-w2" multiple>
-                                <button class="btn-save" onclick="saveAndPrepareDownload('file-algo-w2', 'container-algo-w2', 'algo-w2')">💾 Subir Archivos</button>
+                                <button class="btn-save" onclick="window.saveAndPrepareDownload('file-algo-w2', 'dl-algo-w2')">💾 SUBIR ARCHIVOS</button>
                             </div>
-                            <div id="container-algo-w2" class="files-container">
-                                <span class="no-files-label">Sin archivos entregados</span>
-                            </div>
+                            <div id="dl-algo-w2" class="files-container"><span class="no-files-label">Sin archivos entregados</span></div>
                         </div>
                         <div class="week-card">
                             <h4>Semana 3</h4>
                             <p class="topic-title">Estructuras selectivas simples y dobles (If-Else)</p>
                             <div class="admin-controls">
                                 <input type="file" id="file-algo-w3" multiple>
-                                <button class="btn-save" onclick="saveAndPrepareDownload('file-algo-w3', 'container-algo-w3', 'algo-w3')">💾 Subir Archivos</button>
+                                <button class="btn-save" onclick="window.saveAndPrepareDownload('file-algo-w3', 'dl-algo-w3')">💾 SUBIR ARCHIVOS</button>
                             </div>
-                            <div id="container-algo-w3" class="files-container">
-                                <span class="no-files-label">Sin archivos entregados</span>
-                            </div>
+                            <div id="dl-algo-w3" class="files-container"><span class="no-files-label">Sin archivos entregados</span></div>
                         </div>
                         <div class="week-card">
                             <h4>Semana 4</h4>
                             <p class="topic-title">Estructuras selectivas múltiples (Switch / Según)</p>
                             <div class="admin-controls">
                                 <input type="file" id="file-algo-w4" multiple>
-                                <button class="btn-save" onclick="saveAndPrepareDownload('file-algo-w4', 'container-algo-w4', 'algo-w4')">💾 Subir Archivos</button>
+                                <button class="btn-save" onclick="window.saveAndPrepareDownload('file-algo-w4', 'dl-algo-w4')">💾 SUBIR ARCHIVOS</button>
                             </div>
-                            <div id="container-algo-w4" class="files-container">
-                                <span class="no-files-label">Sin archivos entregados</span>
-                            </div>
+                            <div id="dl-algo-w4" class="files-container"><span class="no-files-label">Sin archivos entregados</span></div>
                         </div>
                     </div>
                 </details>
@@ -816,44 +1103,36 @@
                             <p class="topic-title">Estructuras repetitivas: Bucle Mientras (While)</p>
                             <div class="admin-controls">
                                 <input type="file" id="file-algo-w5" multiple>
-                                <button class="btn-save" onclick="saveAndPrepareDownload('file-algo-w5', 'container-algo-w5', 'algo-w5')">💾 Subir Archivos</button>
+                                <button class="btn-save" onclick="window.saveAndPrepareDownload('file-algo-w5', 'dl-algo-w5')">💾 SUBIR ARCHIVOS</button>
                             </div>
-                            <div id="container-algo-w5" class="files-container">
-                                <span class="no-files-label">Sin archivos entregados</span>
-                            </div>
+                            <div id="dl-algo-w5" class="files-container"><span class="no-files-label">Sin archivos entregados</span></div>
                         </div>
                         <div class="week-card">
                             <h4>Semana 6</h4>
                             <p class="topic-title">Estructuras repetitivas: Para (For) y Hacer-Mientras</p>
                             <div class="admin-controls">
                                 <input type="file" id="file-algo-w6" multiple>
-                                <button class="btn-save" onclick="saveAndPrepareDownload('file-algo-w6', 'container-algo-w6', 'algo-w6')">💾 Subir Archivos</button>
+                                <button class="btn-save" onclick="window.saveAndPrepareDownload('file-algo-w6', 'dl-algo-w6')">💾 SUBIR ARCHIVOS</button>
                             </div>
-                            <div id="container-algo-w6" class="files-container">
-                                <span class="no-files-label">Sin archivos entregados</span>
-                            </div>
+                            <div id="dl-algo-w6" class="files-container"><span class="no-files-label">Sin archivos entregados</span></div>
                         </div>
                         <div class="week-card">
                             <h4>Semana 7</h4>
                             <p class="topic-title">Introducción a Arreglos Unidimensionales (Vectores)</p>
                             <div class="admin-controls">
                                 <input type="file" id="file-algo-w7" multiple>
-                                <button class="btn-save" onclick="saveAndPrepareDownload('file-algo-w7', 'container-algo-w7', 'algo-w7')">💾 Subir Archivos</button>
+                                <button class="btn-save" onclick="window.saveAndPrepareDownload('file-algo-w7', 'dl-algo-w7')">💾 SUBIR ARCHIVOS</button>
                             </div>
-                            <div id="container-algo-w7" class="files-container">
-                                <span class="no-files-label">Sin archivos entregados</span>
-                            </div>
+                            <div id="dl-algo-w7" class="files-container"><span class="no-files-label">Sin archivos entregados</span></div>
                         </div>
                         <div class="week-card">
                             <h4>Semana 8</h4>
                             <p class="topic-title">Operaciones con Vectores (Inserción, Modificación)</p>
                             <div class="admin-controls">
                                 <input type="file" id="file-algo-w8" multiple>
-                                <button class="btn-save" onclick="saveAndPrepareDownload('file-algo-w8', 'container-algo-w8', 'algo-w8')">💾 Subir Archivos</button>
+                                <button class="btn-save" onclick="window.saveAndPrepareDownload('file-algo-w8', 'dl-algo-w8')">💾 SUBIR ARCHIVOS</button>
                             </div>
-                            <div id="container-algo-w8" class="files-container">
-                                <span class="no-files-label">Sin archivos entregados</span>
-                            </div>
+                            <div id="dl-algo-w8" class="files-container"><span class="no-files-label">Sin archivos entregados</span></div>
                         </div>
                     </div>
                 </details>
@@ -867,44 +1146,36 @@
                             <p class="topic-title">Arreglos Bidimensionales (Matrices)</p>
                             <div class="admin-controls">
                                 <input type="file" id="file-algo-w9" multiple>
-                                <button class="btn-save" onclick="saveAndPrepareDownload('file-algo-w9', 'container-algo-w9', 'algo-w9')">💾 Subir Archivos</button>
+                                <button class="btn-save" onclick="window.saveAndPrepareDownload('file-algo-w9', 'dl-algo-w9')">💾 SUBIR ARCHIVOS</button>
                             </div>
-                            <div id="container-algo-w9" class="files-container">
-                                <span class="no-files-label">Sin archivos entregados</span>
-                            </div>
+                            <div id="dl-algo-w9" class="files-container"><span class="no-files-label">Sin archivos entregados</span></div>
                         </div>
                         <div class="week-card">
                             <h4>Semana 10</h4>
                             <p class="topic-title">Operaciones y recorridos en Matrices</p>
                             <div class="admin-controls">
                                 <input type="file" id="file-algo-w10" multiple>
-                                <button class="btn-save" onclick="saveAndPrepareDownload('file-algo-w10', 'container-algo-w10', 'algo-w10')">💾 Subir Archivos</button>
+                                <button class="btn-save" onclick="window.saveAndPrepareDownload('file-algo-w10', 'dl-algo-w10')">💾 SUBIR ARCHIVOS</button>
                             </div>
-                            <div id="container-algo-w10" class="files-container">
-                                <span class="no-files-label">Sin archivos entregados</span>
-                            </div>
+                            <div id="dl-algo-w10" class="files-container"><span class="no-files-label">Sin archivos entregados</span></div>
                         </div>
                         <div class="week-card">
                             <h4>Semana 11</h4>
                             <p class="topic-title">Modularización: Subprogramas y Funciones</p>
                             <div class="admin-controls">
                                 <input type="file" id="file-algo-w11" multiple>
-                                <button class="btn-save" onclick="saveAndPrepareDownload('file-algo-w11', 'container-algo-w11', 'algo-w11')">💾 Subir Archivos</button>
+                                <button class="btn-save" onclick="window.saveAndPrepareDownload('file-algo-w11', 'dl-algo-w11')">💾 SUBIR ARCHIVOS</button>
                             </div>
-                            <div id="container-algo-w11" class="files-container">
-                                <span class="no-files-label">Sin archivos entregados</span>
-                            </div>
+                            <div id="dl-algo-w11" class="files-container"><span class="no-files-label">Sin archivos entregados</span></div>
                         </div>
                         <div class="week-card">
                             <h4>Semana 12</h4>
                             <p class="topic-title">Paso de parámetros por valor y por referencia</p>
                             <div class="admin-controls">
                                 <input type="file" id="file-algo-w12" multiple>
-                                <button class="btn-save" onclick="saveAndPrepareDownload('file-algo-w12', 'container-algo-w12', 'algo-w12')">💾 Subir Archivos</button>
+                                <button class="btn-save" onclick="window.saveAndPrepareDownload('file-algo-w12', 'dl-algo-w12')">💾 SUBIR ARCHIVOS</button>
                             </div>
-                            <div id="container-algo-w12" class="files-container">
-                                <span class="no-files-label">Sin archivos entregados</span>
-                            </div>
+                            <div id="dl-algo-w12" class="files-container"><span class="no-files-label">Sin archivos entregados</span></div>
                         </div>
                     </div>
                 </details>
@@ -918,44 +1189,36 @@
                             <p class="topic-title">Métodos de ordenamiento (Burbuja, Inserción)</p>
                             <div class="admin-controls">
                                 <input type="file" id="file-algo-w13" multiple>
-                                <button class="btn-save" onclick="saveAndPrepareDownload('file-algo-w13', 'container-algo-w13', 'algo-w13')">💾 Subir Archivos</button>
+                                <button class="btn-save" onclick="window.saveAndPrepareDownload('file-algo-w13', 'dl-algo-w13')">💾 SUBIR ARCHIVOS</button>
                             </div>
-                            <div id="container-algo-w13" class="files-container">
-                                <span class="no-files-label">Sin archivos entregados</span>
-                            </div>
+                            <div id="dl-algo-w13" class="files-container"><span class="no-files-label">Sin archivos entregados</span></div>
                         </div>
                         <div class="week-card">
                             <h4>Semana 14</h4>
                             <p class="topic-title">Algoritmos de búsqueda (Lineal y Binaria)</p>
                             <div class="admin-controls">
                                 <input type="file" id="file-algo-w14" multiple>
-                                <button class="btn-save" onclick="saveAndPrepareDownload('file-algo-w14', 'container-algo-w14', 'algo-w14')">💾 Subir Archivos</button>
+                                <button class="btn-save" onclick="window.saveAndPrepareDownload('file-algo-w14', 'dl-algo-w14')">💾 SUBIR ARCHIVOS</button>
                             </div>
-                            <div id="container-algo-w14" class="files-container">
-                                <span class="no-files-label">Sin archivos entregados</span>
-                            </div>
+                            <div id="dl-algo-w14" class="files-container"><span class="no-files-label">Sin archivos entregados</span></div>
                         </div>
                         <div class="week-card">
                             <h4>Semana 15</h4>
                             <p class="topic-title">Integración de algoritmos y casos prácticos</p>
                             <div class="admin-controls">
                                 <input type="file" id="file-algo-w15" multiple>
-                                <button class="btn-save" onclick="saveAndPrepareDownload('file-algo-w15', 'container-algo-w15', 'algo-w15')">💾 Subir Archivos</button>
+                                <button class="btn-save" onclick="window.saveAndPrepareDownload('file-algo-w15', 'dl-algo-w15')">💾 SUBIR ARCHIVOS</button>
                             </div>
-                            <div id="container-algo-w15" class="files-container">
-                                <span class="no-files-label">Sin archivos entregados</span>
-                            </div>
+                            <div id="dl-algo-w15" class="files-container"><span class="no-files-label">Sin archivos entregados</span></div>
                         </div>
                         <div class="week-card">
                             <h4>Semana 16</h4>
                             <p class="topic-title">Evaluación Final del Curso / Consolidado 2</p>
                             <div class="admin-controls">
                                 <input type="file" id="file-algo-w16" multiple>
-                                <button class="btn-save" onclick="saveAndPrepareDownload('file-algo-w16', 'container-algo-w16', 'algo-w16')">💾 Subir Archivos</button>
+                                <button class="btn-save" onclick="window.saveAndPrepareDownload('file-algo-w16', 'dl-algo-w16')">💾 SUBIR ARCHIVOS</button>
                             </div>
-                            <div id="container-algo-w16" class="files-container">
-                                <span class="no-files-label">Sin archivos entregados</span>
-                            </div>
+                            <div id="dl-algo-w16" class="files-container"><span class="no-files-label">Sin archivos entregados</span></div>
                         </div>
                     </div>
                 </details>
@@ -965,8 +1228,8 @@
         <!-- CURSO 2: DESARROLLO DE APLICACIONES -->
         <section id="desarrollo" class="course-section">
             <div class="course-header">
-                <h2>Curso: Desarrollo de Aplicaciones</h2>
-                <p>Sílabo y múltiple entrega de archivos organizada por semanas académicas.</p>
+                <h2>CURSO: DESARROLLO DE APLICACIONES</h2>
+                <p>Sílabo y entrega de evidencias organizadas por semanas académicas.</p>
             </div>
 
             <div class="units-container">
@@ -979,44 +1242,36 @@
                             <p class="topic-title">Introducción a la Web y estructuración con HTML5</p>
                             <div class="admin-controls">
                                 <input type="file" id="file-dev-w1" multiple>
-                                <button class="btn-save" onclick="saveAndPrepareDownload('file-dev-w1', 'container-dev-w1', 'dev-w1')">💾 Subir Archivos</button>
+                                <button class="btn-save" onclick="window.saveAndPrepareDownload('file-dev-w1', 'dl-dev-w1')">💾 SUBIR ARCHIVOS</button>
                             </div>
-                            <div id="container-dev-w1" class="files-container">
-                                <span class="no-files-label">Sin archivos entregados</span>
-                            </div>
+                            <div id="dl-dev-w1" class="files-container"><span class="no-files-label">Sin archivos entregados</span></div>
                         </div>
                         <div class="week-card">
                             <h4>Semana 2</h4>
                             <p class="topic-title">Estilos en cascada (CSS3) y selectores básicos</p>
                             <div class="admin-controls">
                                 <input type="file" id="file-dev-w2" multiple>
-                                <button class="btn-save" onclick="saveAndPrepareDownload('file-dev-w2', 'container-dev-w2', 'dev-w2')">💾 Subir Archivos</button>
+                                <button class="btn-save" onclick="window.saveAndPrepareDownload('file-dev-w2', 'dl-dev-w2')">💾 SUBIR ARCHIVOS</button>
                             </div>
-                            <div id="container-dev-w2" class="files-container">
-                                <span class="no-files-label">Sin archivos entregados</span>
-                            </div>
+                            <div id="dl-dev-w2" class="files-container"><span class="no-files-label">Sin archivos entregados</span></div>
                         </div>
                         <div class="week-card">
                             <h4>Semana 3</h4>
                             <p class="topic-title">Diseño responsivo: Flexbox y maquetación de vistas</p>
                             <div class="admin-controls">
                                 <input type="file" id="file-dev-w3" multiple>
-                                <button class="btn-save" onclick="saveAndPrepareDownload('file-dev-w3', 'container-dev-w3', 'dev-w3')">💾 Subir Archivos</button>
+                                <button class="btn-save" onclick="window.saveAndPrepareDownload('file-dev-w3', 'dl-dev-w3')">💾 SUBIR ARCHIVOS</button>
                             </div>
-                            <div id="container-dev-w3" class="files-container">
-                                <span class="no-files-label">Sin archivos entregados</span>
-                            </div>
+                            <div id="dl-dev-w3" class="files-container"><span class="no-files-label">Sin archivos entregados</span></div>
                         </div>
                         <div class="week-card">
                             <h4>Semana 4</h4>
                             <p class="topic-title">Evaluación Práctica: Maquetación de interfaz web</p>
                             <div class="admin-controls">
                                 <input type="file" id="file-dev-w4" multiple>
-                                <button class="btn-save" onclick="saveAndPrepareDownload('file-dev-w4', 'container-dev-w4', 'dev-w4')">💾 Subir Archivos</button>
+                                <button class="btn-save" onclick="window.saveAndPrepareDownload('file-dev-w4', 'dl-dev-w4')">💾 SUBIR ARCHIVOS</button>
                             </div>
-                            <div id="container-dev-w4" class="files-container">
-                                <span class="no-files-label">Sin archivos entregados</span>
-                            </div>
+                            <div id="dl-dev-w4" class="files-container"><span class="no-files-label">Sin archivos entregados</span></div>
                         </div>
                     </div>
                 </details>
@@ -1030,44 +1285,36 @@
                             <p class="topic-title">Introducción a JavaScript: Variables, tipos y operadores</p>
                             <div class="admin-controls">
                                 <input type="file" id="file-dev-w5" multiple>
-                                <button class="btn-save" onclick="saveAndPrepareDownload('file-dev-w5', 'container-dev-w5', 'dev-w5')">💾 Subir Archivos</button>
+                                <button class="btn-save" onclick="window.saveAndPrepareDownload('file-dev-w5', 'dl-dev-w5')">💾 SUBIR ARCHIVOS</button>
                             </div>
-                            <div id="container-dev-w5" class="files-container">
-                                <span class="no-files-label">Sin archivos entregados</span>
-                            </div>
+                            <div id="dl-dev-w5" class="files-container"><span class="no-files-label">Sin archivos entregados</span></div>
                         </div>
                         <div class="week-card">
                             <h4>Semana 6</h4>
                             <p class="topic-title">Estructuras de control y manipulación del DOM</p>
                             <div class="admin-controls">
                                 <input type="file" id="file-dev-w6" multiple>
-                                <button class="btn-save" onclick="saveAndPrepareDownload('file-dev-w6', 'container-dev-w6', 'dev-w6')">💾 Subir Archivos</button>
+                                <button class="btn-save" onclick="window.saveAndPrepareDownload('file-dev-w6', 'dl-dev-w6')">💾 SUBIR ARCHIVOS</button>
                             </div>
-                            <div id="container-dev-w6" class="files-container">
-                                <span class="no-files-label">Sin archivos entregados</span>
-                            </div>
+                            <div id="dl-dev-w6" class="files-container"><span class="no-files-label">Sin archivos entregados</span></div>
                         </div>
                         <div class="week-card">
                             <h4>Semana 7</h4>
                             <p class="topic-title">Eventos de usuario y validación de formularios</p>
                             <div class="admin-controls">
                                 <input type="file" id="file-dev-w7" multiple>
-                                <button class="btn-save" onclick="saveAndPrepareDownload('file-dev-w7', 'container-dev-w7', 'dev-w7')">💾 Subir Archivos</button>
+                                <button class="btn-save" onclick="window.saveAndPrepareDownload('file-dev-w7', 'dl-dev-w7')">💾 SUBIR ARCHIVOS</button>
                             </div>
-                            <div id="container-dev-w7" class="files-container">
-                                <span class="no-files-label">Sin archivos entregados</span>
-                            </div>
+                            <div id="dl-dev-w7" class="files-container"><span class="no-files-label">Sin archivos entregados</span></div>
                         </div>
                         <div class="week-card">
                             <h4>Semana 8</h4>
                             <p class="topic-title">Examen Parcial / Consolidado 1</p>
                             <div class="admin-controls">
                                 <input type="file" id="file-dev-w8" multiple>
-                                <button class="btn-save" onclick="saveAndPrepareDownload('file-dev-w8', 'container-dev-w8', 'dev-w8')">💾 Subir Archivos</button>
+                                <button class="btn-save" onclick="window.saveAndPrepareDownload('file-dev-w8', 'dl-dev-w8')">💾 SUBIR ARCHIVOS</button>
                             </div>
-                            <div id="container-dev-w8" class="files-container">
-                                <span class="no-files-label">Sin archivos entregados</span>
-                            </div>
+                            <div id="dl-dev-w8" class="files-container"><span class="no-files-label">Sin archivos entregados</span></div>
                         </div>
                     </div>
                 </details>
@@ -1081,44 +1328,36 @@
                             <p class="topic-title">Programación Orientada a Objetos (Clases, constructores)</p>
                             <div class="admin-controls">
                                 <input type="file" id="file-dev-w9" multiple>
-                                <button class="btn-save" onclick="saveAndPrepareDownload('file-dev-w9', 'container-dev-w9', 'dev-w9')">💾 Subir Archivos</button>
+                                <button class="btn-save" onclick="window.saveAndPrepareDownload('file-dev-w9', 'dl-dev-w9')">💾 SUBIR ARCHIVOS</button>
                             </div>
-                            <div id="container-dev-w9" class="files-container">
-                                <span class="no-files-label">Sin archivos entregados</span>
-                            </div>
+                            <div id="dl-dev-w9" class="files-container"><span class="no-files-label">Sin archivos entregados</span></div>
                         </div>
                         <div class="week-card">
                             <h4>Semana 10</h4>
                             <p class="topic-title">Asincronismo en la web (Promises, Async/Await)</p>
                             <div class="admin-controls">
                                 <input type="file" id="file-dev-w10" multiple>
-                                <button class="btn-save" onclick="saveAndPrepareDownload('file-dev-w10', 'container-dev-w10', 'dev-w10')">💾 Subir Archivos</button>
+                                <button class="btn-save" onclick="window.saveAndPrepareDownload('file-dev-w10', 'dl-dev-w10')">💾 SUBIR ARCHIVOS</button>
                             </div>
-                            <div id="container-dev-w10" class="files-container">
-                                <span class="no-files-label">Sin archivos entregados</span>
-                            </div>
+                            <div id="dl-dev-w10" class="files-container"><span class="no-files-label">Sin archivos entregados</span></div>
                         </div>
                         <div class="week-card">
                             <h4>Semana 11</h4>
                             <p class="topic-title">Consumo de APIs externas (Fetch) y formato JSON</p>
                             <div class="admin-controls">
                                 <input type="file" id="file-dev-w11" multiple>
-                                <button class="btn-save" onclick="saveAndPrepareDownload('file-dev-w11', 'container-dev-w11', 'dev-w11')">💾 Subir Archivos</button>
+                                <button class="btn-save" onclick="window.saveAndPrepareDownload('file-dev-w11', 'dl-dev-w11')">💾 SUBIR ARCHIVOS</button>
                             </div>
-                            <div id="container-dev-w11" class="files-container">
-                                <span class="no-files-label">Sin archivos entregados</span>
-                            </div>
+                            <div id="dl-dev-w11" class="files-container"><span class="no-files-label">Sin archivos entregados</span></div>
                         </div>
                         <div class="week-card">
                             <h4>Semana 12</h4>
                             <p class="topic-title">Evaluación / Práctica Calificada 2</p>
                             <div class="admin-controls">
                                 <input type="file" id="file-dev-w12" multiple>
-                                <button class="btn-save" onclick="saveAndPrepareDownload('file-dev-w12', 'container-dev-w12', 'dev-w12')">💾 Subir Archivos</button>
+                                <button class="btn-save" onclick="window.saveAndPrepareDownload('file-dev-w12', 'dl-dev-w12')">💾 SUBIR ARCHIVOS</button>
                             </div>
-                            <div id="container-dev-w12" class="files-container">
-                                <span class="no-files-label">Sin archivos entregados</span>
-                            </div>
+                            <div id="dl-dev-w12" class="files-container"><span class="no-files-label">Sin archivos entregados</span></div>
                         </div>
                     </div>
                 </details>
@@ -1132,44 +1371,36 @@
                             <p class="topic-title">Almacenamiento local (LocalStorage y SessionStorage)</p>
                             <div class="admin-controls">
                                 <input type="file" id="file-dev-w13" multiple>
-                                <button class="btn-save" onclick="saveAndPrepareDownload('file-dev-w13', 'container-dev-w13', 'dev-w13')">💾 Subir Archivos</button>
+                                <button class="btn-save" onclick="window.saveAndPrepareDownload('file-dev-w13', 'dl-dev-w13')">💾 SUBIR ARCHIVOS</button>
                             </div>
-                            <div id="container-dev-w13" class="files-container">
-                                <span class="no-files-label">Sin archivos entregados</span>
-                            </div>
+                            <div id="dl-dev-w13" class="files-container"><span class="no-files-label">Sin archivos entregados</span></div>
                         </div>
                         <div class="week-card">
                             <h4>Semana 14</h4>
                             <p class="topic-title">Control de versiones con Git y alojamiento (GitHub Pages)</p>
                             <div class="admin-controls">
                                 <input type="file" id="file-dev-w14" multiple>
-                                <button class="btn-save" onclick="saveAndPrepareDownload('file-dev-w14', 'container-dev-w14', 'dev-w14')">💾 Subir Archivos</button>
+                                <button class="btn-save" onclick="window.saveAndPrepareDownload('file-dev-w14', 'dl-dev-w14')">💾 SUBIR ARCHIVOS</button>
                             </div>
-                            <div id="container-dev-w14" class="files-container">
-                                <span class="no-files-label">Sin archivos entregados</span>
-                            </div>
+                            <div id="dl-dev-w14" class="files-container"><span class="no-files-label">Sin archivos entregados</span></div>
                         </div>
                         <div class="week-card">
                             <h4>Semana 15</h4>
                             <p class="topic-title">Integración y ajustes finales del proyecto</p>
                             <div class="admin-controls">
                                 <input type="file" id="file-dev-w15" multiple>
-                                <button class="btn-save" onclick="saveAndPrepareDownload('file-dev-w15', 'container-dev-w15', 'dev-w15')">💾 Subir Archivos</button>
+                                <button class="btn-save" onclick="window.saveAndPrepareDownload('file-dev-w15', 'dl-dev-w15')">💾 SUBIR ARCHIVOS</button>
                             </div>
-                            <div id="container-dev-w15" class="files-container">
-                                <span class="no-files-label">Sin archivos entregados</span>
-                            </div>
+                            <div id="dl-dev-w15" class="files-container"><span class="no-files-label">Sin archivos entregados</span></div>
                         </div>
                         <div class="week-card">
                             <h4>Semana 16</h4>
                             <p class="topic-title">Presentación de Proyecto Final / Consolidado 2</p>
                             <div class="admin-controls">
                                 <input type="file" id="file-dev-w16" multiple>
-                                <button class="btn-save" onclick="saveAndPrepareDownload('file-dev-w16', 'container-dev-w16', 'dev-w16')">💾 Subir Archivos</button>
+                                <button class="btn-save" onclick="window.saveAndPrepareDownload('file-dev-w16', 'dl-dev-w16')">💾 SUBIR ARCHIVOS</button>
                             </div>
-                            <div id="container-dev-w16" class="files-container">
-                                <span class="no-files-label">Sin archivos entregados</span>
-                            </div>
+                            <div id="dl-dev-w16" class="files-container"><span class="no-files-label">Sin archivos entregados</span></div>
                         </div>
                     </div>
                 </details>
@@ -1181,81 +1412,75 @@
     <!-- NOTIFICACIÓN TOAST -->
     <div id="toast" class="toast"></div>
 
+    <!-- CYBER-BOT IA EXTENSIÓN -->
+    <div class="ai-fab" onclick="window.toggleAiDrawer()">
+        ⚡ CYBER-BOT IA
+    </div>
+
+    <div id="aiDrawer" class="ai-drawer">
+        <div class="ai-header">
+            <div class="ai-title">🤖 CYBER-BOT // ASISTENTE UPLA</div>
+            <span class="close-btn" onclick="window.toggleAiDrawer()" style="font-size:1.2rem;">×</span>
+        </div>
+        <div id="aiBody" class="ai-body">
+            <div class="ai-msg bot">
+                ¡Hola! Soy tu asistente inteligente del Portafolio Académico. Puedo responder tus dudas sobre el estudiante Miguel Portocarrero, los sílabos de Algoritmos o Desarrollo de Aplicaciones y los entregables subidos.
+            </div>
+        </div>
+        <div class="ai-input-area">
+            <input type="text" id="aiInput" placeholder="Haz una pregunta sobre el portafolio..." onkeypress="if(event.key==='Enter') window.sendAiQuestion()">
+            <button class="ai-send-btn" onclick="window.sendAiQuestion()">ENVIAR</button>
+        </div>
+    </div>
+
     <footer>
-        <p>&copy; 2026 MIGUEL PORTOCARRERO | UNIVERSIDAD PERUANA LOS ANDES</p>
+        <p>© 2026 Miguel Ángel Portocarrero Acuña | Universidad Peruana Los Andes — Escuela de Ingeniería de Sistemas</p>
     </footer>
 
-    <!-- LIBRERÍA SUPABASE SDK -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
+    <!-- LÓGICA JAVASCRIPT GLOBAL -->
     <script>
-        // ==========================================
-        // CONFIGURACIÓN Y CREDENCIALES DE SUPABASE
-        // ==========================================
-        const rawSupabaseUrl = 'https://onsudjhqwdwpysnpduxu.supabase.co/rest/v1/';
-        const supabaseUrl = rawSupabaseUrl.replace(/\/rest\/v1\/?$/, '');
+        // CONFIGURACIÓN DE SUPABASE
+        const rawUrl = 'https://onsudjhqwdwpysnpduxu.supabase.co/rest/v1/';
+        const supabaseUrl = rawUrl.replace('/rest/v1/', '').replace(/\/$/, '');
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9uc3Vkamhxd2R3cHlzbnBkdXh1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk5NzQwMjcsImV4cCI6MjEwNTU1MDAyN30.9yckEt4cEkLRXBIgmHTRIXKfns0bFigMh1BUrs1LRdw';
 
         let supabaseClient = null;
 
-        function initSupabase() {
-            try {
-                if (window.supabase && typeof window.supabase.createClient === 'function') {
-                    supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
-                    console.log("⚡ Supabase Neon inicializado correctamente.");
-                }
-            } catch (err) {
-                console.error("Error al inicializar Supabase:", err);
+        try {
+            if (window.supabase) {
+                supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
+                console.log("Supabase inicializado correctamente.");
             }
+        } catch (err) {
+            console.error("Error inicializando Supabase:", err);
         }
 
-        // ==========================================
-        // CAMBIO DE CURSOS Y PESTAÑAS
-        // ==========================================
-        function switchCourse(courseId, btn) {
-            document.querySelectorAll('.course-section').forEach(sec => {
-                sec.classList.remove('active-section');
-            });
+        // FUNCIONES DE INTERFAZ GLOBAL
+        window.switchCourse = function(courseId, btn) {
+            document.querySelectorAll('.course-section').forEach(sec => sec.classList.remove('active-section'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
             
-            document.querySelectorAll('.nav-btn').forEach(b => {
-                b.classList.remove('active');
-            });
-            
-            const targetSection = document.getElementById(courseId);
-            if (targetSection) {
-                targetSection.classList.add('active-section');
-            }
+            const target = document.getElementById(courseId);
+            if (target) target.classList.add('active-section');
+            if (btn) btn.classList.add('active');
+        };
 
-            if (btn) {
-                btn.classList.add('active');
-            } else {
-                const targetBtn = document.querySelector(`.nav-btn[data-course="${courseId}"]`);
-                if (targetBtn) targetBtn.classList.add('active');
-            }
-        }
-
-        // ==========================================
-        // MODAL Y ACCESO ADMINISTRADOR NEÓN
-        // ==========================================
-        function openLoginModal() {
+        window.openLoginModal = function() {
             const modal = document.getElementById("loginModal");
             if (modal) modal.classList.add("show");
-        }
+        };
 
-        function closeLoginModal() {
+        window.closeLoginModal = function() {
             const modal = document.getElementById("loginModal");
             if (modal) modal.classList.remove("show");
-            const error = document.getElementById('login-error');
-            if (error) error.textContent = "";
-        }
+            const err = document.getElementById('login-error');
+            if (err) err.textContent = "";
+        };
 
-        function login() {
-            const userEl = document.getElementById('adminUser');
-            const passEl = document.getElementById('adminPass');
+        window.login = function() {
+            const user = (document.getElementById('adminUser').value || '').trim().toLowerCase();
+            const pass = document.getElementById('adminPass').value || '';
             const error = document.getElementById('login-error');
-
-            const user = userEl ? userEl.value.trim().toLowerCase() : '';
-            const pass = passEl ? passEl.value : '';
 
             if (user === 'miguel' && pass === '123456') {
                 document.body.classList.add('is-admin');
@@ -1268,16 +1493,16 @@
                 if (authBtn) {
                     authBtn.textContent = 'CERRAR SESIÓN';
                     authBtn.classList.add('btn-logout');
-                    authBtn.onclick = logout;
+                    authBtn.onclick = window.logout;
                 }
-                closeLoginModal();
-                showToast('Modo administrador activado', 'success');
+                window.closeLoginModal();
+                window.showToast('Modo administrador activado', 'success');
             } else {
-                if (error) error.textContent = 'ACCESO DENEGADO: Credenciales incorrectas';
+                if (error) error.textContent = 'Usuario o contraseña incorrectos.';
             }
-        }
+        };
 
-        function logout() {
+        window.logout = function() {
             document.body.classList.remove('is-admin');
             const roleSpan = document.getElementById('current-role');
             if (roleSpan) {
@@ -1288,204 +1513,181 @@
             if (authBtn) {
                 authBtn.textContent = 'Acceso Admin';
                 authBtn.classList.remove('btn-logout');
-                authBtn.onclick = openLoginModal;
+                authBtn.onclick = window.openLoginModal;
             }
-            const u = document.getElementById('adminUser');
-            const p = document.getElementById('adminPass');
-            if (u) u.value = "";
-            if (p) p.value = "";
-            showToast('Sesión de administración cerrada');
-        }
+            document.getElementById('adminUser').value = "";
+            document.getElementById('adminPass').value = "";
+            window.showToast('Sesión cerrada');
+        };
 
-        function showToast(message, type = '') {
+        window.showToast = function(message, type = '') {
             const toast = document.getElementById('toast');
             if (!toast) return;
             toast.textContent = message;
             toast.className = 'toast show ' + type;
             setTimeout(() => {
                 toast.className = 'toast';
-            }, 4000);
-        }
+            }, 3500);
+        };
 
-        // ==========================================
-        // SUBIR MÚLTIPLES ARCHIVOS A LA NUBE
-        // ==========================================
-        async function saveAndPrepareDownload(inputId, containerId, semanaId) {
-            if (!supabaseClient) initSupabase();
-
-            if (!supabaseClient) {
-                showToast('Sin conexión con la base de datos Supabase.', 'error');
-                return;
-            }
-
-            const fileInput = document.getElementById(inputId);
-            if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
-                showToast('Por favor, selecciona uno o más archivos.', 'error');
-                return;
-            }
-
-            const files = Array.from(fileInput.files);
-            showToast(`Subiendo ${files.length} archivo(s)...`, 'success');
-
-            let successCount = 0;
-
-            for (let i = 0; i < files.length; i++) {
-                const file = files[i];
-                const fileExt = file.name.split('.').pop();
-                const cleanName = file.name.replace(/[^a-zA-Z0-9.\-_]/g, '_');
-                const uniqueFileName = `${semanaId}-${Date.now()}-${i}-${cleanName}`;
-
-                try {
-                    // 1. Subir a Storage Bucket 'entregables'
-                    const { data: uploadData, error: uploadError } = await supabaseClient.storage
-                        .from('entregables')
-                        .upload(uniqueFileName, file, { cacheControl: '3600', upsert: true });
-
-                    if (uploadError) {
-                        console.error('Error Storage:', uploadError);
-                        showToast(`Error en ${file.name}: ${uploadError.message}`, 'error');
-                        continue;
-                    }
-
-                    // 2. Obtener URL pública
-                    const { data: urlData } = supabaseClient.storage
-                        .from('entregables')
-                        .getPublicUrl(uniqueFileName);
-
-                    const fileUrl = urlData.publicUrl;
-
-                    // 3. Registrar en base de datos con objeto e ID único
-                    const recordPayload = {
-                        semana_id: semanaId,
-                        nombre: file.name,
-                        url: fileUrl
-                    };
-
-                    if (typeof crypto !== 'undefined' && crypto.randomUUID) {
-                        recordPayload.id = crypto.randomUUID();
-                    }
-
-                    const { error: dbError } = await supabaseClient.from('archivos').insert([recordPayload]);
-
-                    if (dbError) {
-                        console.error('Error DB:', dbError);
-                        showToast(`Error guardando datos de ${file.name}: ${dbError.message}`, 'error');
-                        continue;
-                    }
-
-                    successCount++;
-                } catch (err) {
-                    console.error("Excepción en guardado:", err);
-                }
-            }
-
-            if (successCount > 0) {
-                fileInput.value = ''; // Limpiar selector
-                showToast(`¡${successCount} archivo(s) guardado(s) exitosamente!`, 'success');
-                await loadFilesFromSupabase(); // Recargar lista
-            }
-        }
-
-        // ==========================================
-        // RECUPERAR Y RENDERIZAR ARCHIVOS MULTIPLES
-        // ==========================================
-        async function loadFilesFromSupabase() {
-            if (!supabaseClient) initSupabase();
+        // CARGA DE ARCHIVOS DESDE SUPABASE
+        async function loadUploadedFiles() {
             if (!supabaseClient) return;
 
             try {
                 const { data, error } = await supabaseClient.from('archivos').select('*');
                 if (error) throw error;
 
-                // Agrupar archivos por semana_id
-                const filesBySemana = {};
-
-                if (data) {
-                    data.forEach(item => {
-                        if (!filesBySemana[item.semana_id]) {
-                            filesBySemana[item.semana_id] = [];
-                        }
-                        filesBySemana[item.semana_id].push(item);
-                    });
-                }
-
-                // Actualizar contenedores de todas las semanas
-                document.querySelectorAll('.files-container').forEach(container => {
-                    const containerId = container.id; // ej: container-algo-w1
-                    const semanaId = containerId.replace('container-', ''); // ej: algo-w1
-                    const items = filesBySemana[semanaId] || [];
-
-                    if (items.length === 0) {
-                        container.innerHTML = '<span class="no-files-label">Sin archivos entregados</span>';
-                    } else {
-                        container.innerHTML = items.map(file => `
-                            <div class="file-item-neon">
-                                <a href="${file.url}" target="_blank" class="btn-download-neon" title="${file.nombre}">
-                                    📥 ${escapeHtml(file.nombre)}
-                                </a>
-                                <button class="btn-delete-file" onclick="deleteFile('${file.id || ''}', '${file.url}', '${semanaId}')" title="Eliminar archivo">✖</button>
-                            </div>
-                        `).join('');
-                    }
+                // Limpiar contenedores
+                document.querySelectorAll('.files-container').forEach(c => {
+                    c.innerHTML = '<span class="no-files-label">Sin archivos entregados</span>';
                 });
 
+                if (data && data.length > 0) {
+                    data.forEach(item => {
+                        const container = document.getElementById(item.semana_id);
+                        if (container) {
+                            const noFiles = container.querySelector('.no-files-label');
+                            if (noFiles) noFiles.remove();
+
+                            const itemDiv = document.createElement('div');
+                            itemDiv.className = 'file-item-neon';
+                            itemDiv.id = `file-node-${item.id}`;
+                            itemDiv.innerHTML = `
+                                <a href="${item.url}" target="_blank" class="btn-download-neon">
+                                    📄 ${item.nombre}
+                                </a>
+                                <button class="btn-delete-file" onclick="window.deleteFile('${item.id}', '${item.nombre}')">✖</button>
+                            `;
+                            container.appendChild(itemDiv);
+                        }
+                    });
+                }
             } catch (err) {
-                console.error("Error recuperando archivos de Supabase:", err);
+                console.error("Error al cargar entregables:", err);
             }
         }
 
-        async function deleteFile(id, url, semanaId) {
-            if (!supabaseClient) initSupabase();
-            if (!supabaseClient) return;
+        // SUBIDA DE ARCHIVOS MÚLTIPLES
+        window.saveAndPrepareDownload = async function(inputId, downloadContainerId) {
+            if (!supabaseClient) {
+                window.showToast('Error de conexión a la base de datos.', 'error');
+                return;
+            }
+
+            const fileInput = document.getElementById(inputId);
+            if (!fileInput.files || fileInput.files.length === 0) {
+                window.showToast('Selecciona al menos un archivo primero.', 'error');
+                return;
+            }
+
+            const files = Array.from(fileInput.files);
+            window.showToast(`Subiendo ${files.length} archivo(s)...`, 'success');
+
+            for (const file of files) {
+                try {
+                    const semanaId = downloadContainerId;
+                    const fileExt = file.name.split('.').pop();
+                    const cleanName = file.name.replace(/[^a-zA-Z0-9.\-_]/g, '_');
+                    const uniqueStoragePath = `${semanaId}-${Date.now()}-${cleanName}`;
+
+                    const { error: uploadError } = await supabaseClient.storage
+                        .from('entregables')
+                        .upload(uniqueStoragePath, file, { cacheControl: '3600', upsert: false });
+
+                    if (uploadError) throw uploadError;
+
+                    const { data: urlData } = supabaseClient.storage
+                        .from('entregables')
+                        .getPublicUrl(uniqueStoragePath);
+
+                    const fileUrl = urlData.publicUrl;
+
+                    const { error: dbError } = await supabaseClient.from('archivos').insert([
+                        {
+                            semana_id: semanaId,
+                            nombre: file.name,
+                            url: fileUrl
+                        }
+                    ]);
+
+                    if (dbError) throw dbError;
+
+                } catch (err) {
+                    console.error("Error subiendo el archivo:", err);
+                    window.showToast(`Error con ${file.name}: ${err.message}`, 'error');
+                }
+            }
+
+            fileInput.value = '';
+            window.showToast('¡Archivos subidos con éxito!', 'success');
+            await loadUploadedFiles();
+        };
+
+        // ELIMINACIÓN DE ARCHIVOS (ADMIN)
+        window.deleteFile = async function(dbId, fileName) {
+            if (!confirm(`¿Eliminar el archivo "${fileName}"?`)) return;
 
             try {
-                showToast('Eliminando archivo...', 'success');
-                
-                // Borrar de DB por id o url
-                if (id) {
-                    await supabaseClient.from('archivos').delete().eq('id', id);
-                } else {
-                    await supabaseClient.from('archivos').delete().eq('url', url);
-                }
+                const { error } = await supabaseClient.from('archivos').delete().eq('id', dbId);
+                if (error) throw error;
 
-                showToast('Archivo eliminado', 'success');
-                await loadFilesFromSupabase();
+                window.showToast(`Archivo "${fileName}" eliminado.`, 'success');
+                await loadUploadedFiles();
             } catch (err) {
-                console.error("Error al borrar:", err);
-                showToast('Error al eliminar el archivo', 'error');
+                console.error("Error eliminando archivo:", err);
+                window.showToast('No se pudo eliminar el archivo.', 'error');
             }
-        }
+        };
 
-        function escapeHtml(str) {
-            return String(str)
-                .replace(/&/g, "&amp;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;")
-                .replace(/"/g, "&quot;")
-                .replace(/'/g, "&#039;");
-        }
+        // CYBER-BOT ASISTENTE IA
+        window.toggleAiDrawer = function() {
+            const drawer = document.getElementById('aiDrawer');
+            if (drawer) drawer.classList.toggle('open');
+        };
 
-        // Registrar funciones en el ámbito global
-        window.switchCourse = switchCourse;
-        window.openLoginModal = openLoginModal;
-        window.closeLoginModal = closeLoginModal;
-        window.login = login;
-        window.logout = logout;
-        window.saveAndPrepareDownload = saveAndPrepareDownload;
-        window.deleteFile = deleteFile;
+        window.sendAiQuestion = function() {
+            const input = document.getElementById('aiInput');
+            const body = document.getElementById('aiBody');
+            if (!input || !input.value.trim() || !body) return;
 
-        // Eventos DOM
+            const q = input.value.trim();
+            input.value = '';
+
+            // Renderizar pregunta del usuario
+            const userMsg = document.createElement('div');
+            userMsg.className = 'ai-msg user';
+            userMsg.textContent = q;
+            body.appendChild(userMsg);
+
+            // Generar respuesta
+            const botMsg = document.createElement('div');
+            botMsg.className = 'ai-msg bot';
+            
+            const lowerQ = q.toLowerCase();
+
+            if (lowerQ.includes('miguel') || lowerQ.includes('estudiante') || lowerQ.includes('quien es') || lowerQ.includes('ciclo') || lowerQ.includes('datos')) {
+                botMsg.textContent = "El portafolio pertenece al estudiante Miguel Ángel Portocarrero Acuña, alumno de 4.º Ciclo de la carrera de Ingeniería de Sistemas y Computación en la Universidad Peruana Los Andes (UPLA), semestre 2026-II.";
+            } else if (lowerQ.includes('algoritmos') || lowerQ.includes('curso 1')) {
+                botMsg.textContent = "El curso de Algoritmos abarca 4 Unidades: Fundamentos de Algoritmos (S1-S4), Estructuras Repetitivas y Vectores (S5-S8), Matrices y Funciones (S9-S12), y Algoritmos de Ordenamiento y Búsqueda (S13-S16).";
+            } else if (lowerQ.includes('desarrollo') || lowerQ.includes('aplicaciones') || lowerQ.includes('curso 2')) {
+                botMsg.textContent = "El curso de Desarrollo de Aplicaciones incluye: HTML5 y CSS3 (S1-S4), JavaScript y DOM (S5-S8), POO y Consumo de APIs (S9-S12), y Almacenamiento Local, Git y GitHub Pages (S13-S16).";
+            } else if (lowerQ.includes('upla') || lowerQ.includes('universidad')) {
+                botMsg.textContent = "El portafolio corresponde a la Universidad Peruana Los Andes (UPLA), Facultad de Ingeniería, Escuela Profesional de Ingeniería de Sistemas.";
+            } else {
+                botMsg.textContent = "El portafolio cuenta con los cursos de Algoritmos y Desarrollo de Aplicaciones, organizados en 16 semanas académicas con almacenamiento en la nube a través de Supabase.";
+            }
+
+            body.appendChild(botMsg);
+            body.scrollTop = body.scrollHeight;
+        };
+
+        // INICIALIZACIÓN
         document.addEventListener("DOMContentLoaded", function() {
-            initSupabase();
-            loadFilesFromSupabase();
-
-            window.addEventListener('click', function(event) {
-                const modal = document.getElementById("loginModal");
-                if (event.target === modal) {
-                    closeLoginModal();
-                }
-            });
+            loadUploadedFiles();
         });
     </script>
+</body>
+</html>
 </body>
 </html>
